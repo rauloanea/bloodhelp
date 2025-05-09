@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="800.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="40.0" layoutY="39.0" text="Penis" />
+      <Label layoutX="40.0" layoutY="79.0" styleClass="label-info" text="Varsta" />
+      <TextField fx:id="textfieldAge" layoutX="40.0" layoutY="108.0" prefHeight="30.0" prefWidth="252.0" />
+      <Label layoutX="314.0" layoutY="79.0" styleClass="label-info" text="Gen" />
+      <ComboBox fx:id="dropdownGen" layoutX="315.0" layoutY="109.0" prefHeight="30.0" prefWidth="215.0" />
+   </children>
+</AnchorPane>

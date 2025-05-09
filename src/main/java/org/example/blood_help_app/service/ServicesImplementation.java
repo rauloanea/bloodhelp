@@ -50,7 +50,7 @@ public class ServicesImplementation {
 
         var donor = this.donorRepo.save(new Donor(
                 user,
-                null, null, false, null
+                null, null, -1, null
         ));
         if(donor.isEmpty())
             throw new RuntimeException("Eroare la creearea noului donator!");
@@ -66,5 +66,10 @@ public class ServicesImplementation {
         if(donor.isEmpty())
             throw new RuntimeException("Email sau parola incorecte!");
         return donor.get();
+    }
+
+    public void setDonorEligibility(Donor user, Integer value){
+        user.setEligibility(value);
+        this.donorRepo.update(user);
     }
 }

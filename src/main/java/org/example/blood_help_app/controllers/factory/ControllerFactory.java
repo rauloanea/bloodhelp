@@ -7,9 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.example.blood_help_app.controllers.controller_implementation.CreateAccountController;
-import org.example.blood_help_app.controllers.controller_implementation.HomeController;
-import org.example.blood_help_app.controllers.controller_implementation.LoginController;
+import org.example.blood_help_app.controllers.controller_implementation.*;
 import org.example.blood_help_app.domain.users.Donor;
 import org.example.blood_help_app.service.ServicesImplementation;
 
@@ -38,6 +36,10 @@ public class ControllerFactory {
         this.user = user;
     }
 
+    public Donor getUser(){
+        return user;
+    }
+
     public void setFirstStage(final Stage firstStage) {
         this.firstStage = firstStage;
     }
@@ -55,6 +57,8 @@ public class ControllerFactory {
             case ADMIN_HOME -> throw new RuntimeException("Not implemented!");
             case DOCTOR_HOME -> throw new RuntimeException("Not implemented!");
             case CREATE_ACCOUNT -> runCreateAccountPage();
+            case DONOR_PROFILE_PAGE -> runDonorProfilePage();
+            case ELIGIBILITY_FORM -> runEligibilityFormPage();
         }
 
         if(buttonTrigger != null){
@@ -118,6 +122,27 @@ public class ControllerFactory {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/create_account.fxml"));
 
         CreateAccountController controller = new CreateAccountController();
+//        controller.setCurrentUser(this.currentUser);
+        controller.setServices(services);
+        loader.setController(controller);
+
+        this.runGenericPage(loader);
+    }
+
+    private void runDonorProfilePage(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/profile_page.fxml"));
+
+        ProfileController controller = new ProfileController();
+//        controller.setCurrentUser(this.currentUser);
+        controller.setServices(services);
+        loader.setController(controller);
+
+        this.runGenericPage(loader);
+    }
+
+    private void runEligibilityFormPage(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/eligibility_form.fxml"));
+        EligibilityFormController controller = new EligibilityFormController();
 //        controller.setCurrentUser(this.currentUser);
         controller.setServices(services);
         loader.setController(controller);

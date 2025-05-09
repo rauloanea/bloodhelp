@@ -33,7 +33,7 @@ public class DonorRepository extends AbstractRepository<Long, Donor> {
                 user.getBirthdayDate(),
                 rs.getString("blood_type") != null ? BloodTypeEnum.valueOf(rs.getString("blood_type")) : null,
                 new ArrayList<>(), // Will be populated separately
-                rs.getBoolean("eligible"),
+                rs.getInt("eligible"),
                 rs.getString("contact_info")
         );
         donor.setId(user.getId());
@@ -51,9 +51,9 @@ public class DonorRepository extends AbstractRepository<Long, Donor> {
         }
 
         if (donor.getEligibility() != null) {
-            ps.setInt(3, donor.getEligibility() ? 1 : 0);
+            ps.setInt(3, donor.getEligibility());
         } else {
-            ps.setNull(3, Types.INTEGER);
+            ps.setInt(3, -1);
         }
 
         ps.setString(4, donor.getContactInfo());
@@ -61,9 +61,16 @@ public class DonorRepository extends AbstractRepository<Long, Donor> {
 
     @Override
     protected void setPreparedStatementForUpdate(PreparedStatement ps, Donor donor) throws SQLException {
-        ps.setString(1, donor.getBloodType().name());
-        ps.setInt(2, donor.getEligibility() ? 1 : 0);
-        ps.setString(3, donor.getContactInfo());
+        if(donor.getBloodType() != null)
+            ps.setString(1, donor.getBloodType().name());
+        else
+            ps.setNull(1, Types.VARCHAR);
+        ps.setInt(2, donor.getEligibility() != null ? donor.getEligibility() : -1);
+
+        if(donor.getContactInfo() != null)
+            ps.setString(3, donor.getContactInfo());
+        else
+            ps.setNull(3, Types.VARCHAR);
     }
 
     @Override
@@ -84,5 +91,10 @@ public class DonorRepository extends AbstractRepository<Long, Donor> {
     @Override
     protected String getSelectOneString(){
         return "SELECT * FROM " + tableName + " WHERE user_id = ?";
+    }
+
+    @Override
+    protected String getUpdateIdentifier() {
+        return " WHERE user_id = ?";
     }
 }

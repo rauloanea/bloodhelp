@@ -77,4 +77,9 @@ public class BloodUnitRepository extends AbstractRepository<Long, BloodUnit> {
     protected String getSelectOneString(){
         return "SELECT * FROM " + tableName + " WHERE id = ?";
     }
+
+    @Override
+    protected String getUpdateIdentifier() {
+        return " WHERE id = ?";
+    }
 }

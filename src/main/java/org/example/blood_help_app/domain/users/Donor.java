@@ -10,10 +10,10 @@ import java.util.List;
 public class Donor extends User {
     private BloodTypeEnum bloodType;
     private List<Donation> donationHistory;
-    private Boolean eligible;
+    private Integer eligible;
     private String contactInfo;
 
-    public Donor(String name, String email, String username, String password, String phoneNumber, LocalDateTime birthdayDate, BloodTypeEnum bloodType, List<Donation> donationHistory, Boolean eligible, String contactInfo) {
+    public Donor(String name, String email, String username, String password, String phoneNumber, LocalDateTime birthdayDate, BloodTypeEnum bloodType, List<Donation> donationHistory, Integer eligible, String contactInfo) {
         super(name, email, username, password, phoneNumber, birthdayDate, UserTypeEnum.DONOR);
         this.bloodType = bloodType;
         this.donationHistory = donationHistory;
@@ -21,7 +21,7 @@ public class Donor extends User {
         this.contactInfo = contactInfo;
     }
 
-    public Donor(User user, BloodTypeEnum bloodType, List<Donation> donationHistory, Boolean eligible, String contactInfo){
+    public Donor(User user, BloodTypeEnum bloodType, List<Donation> donationHistory, Integer eligible, String contactInfo){
         super(user.name, user.email, user.username, user.password, user.phoneNumber, user.birthdayDate, user.userType);
         id = user.getId();
         this.bloodType = bloodType;
@@ -46,11 +46,11 @@ public class Donor extends User {
         this.donationHistory = donationHistory;
     }
 
-    public Boolean getEligibility() {
+    public Integer getEligibility() {
         return eligible;
     }
 
-    public void setEligibility(Boolean eligible) {
+    public void setEligibility(Integer eligible) {
         this.eligible = eligible;
     }
 

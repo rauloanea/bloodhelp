@@ -93,4 +93,9 @@ public class DonationRepository extends AbstractRepository<Long, Donation> {
     protected String getSelectOneString(){
         return "SELECT * FROM " + tableName + " WHERE id = ?";
     }
+
+    @Override
+    protected String getUpdateIdentifier() {
+        return " WHERE id = ?";
+    }
 }

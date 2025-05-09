@@ -68,4 +68,9 @@ public class DoctorRepository extends AbstractRepository<Long, Doctor> {
     protected String getSelectOneString(){
         return "SELECT * FROM " + tableName + " WHERE user_id = ?";
     }
+
+    @Override
+    protected String getUpdateIdentifier() {
+        return " WHERE user_id = ?";
+    }
 }

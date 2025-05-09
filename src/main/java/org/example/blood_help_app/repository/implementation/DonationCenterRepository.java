@@ -58,4 +58,9 @@ public class DonationCenterRepository extends AbstractRepository<Integer, Donati
     protected String getSelectOneString(){
         return "SELECT * FROM " + tableName + " WHERE id = ?";
     }
+
+    @Override
+    protected String getUpdateIdentifier() {
+        return " WHERE id = ?";
+    }
 }

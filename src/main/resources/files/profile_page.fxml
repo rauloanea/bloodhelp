@@ -10,15 +10,11 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="690.0" prefWidth="885.0">
                <children>
-                  <Label layoutX="368.0" layoutY="61.0" styleClass="label-blood" text="BloodHelp" />
-                  <Label layoutX="327.0" layoutY="116.0" styleClass="label-info" text="Impreuna putem face o schimbare" />
-                  <Button fx:id="donationCentersSecondButton" layoutX="275.0" layoutY="155.0" mnemonicParsing="false" styleClass="button2" text="Cauta centru donare" />
-                  <Button fx:id="donationAppointmentSecondButton" layoutX="473.0" layoutY="155.0" mnemonicParsing="false" text="Programeaza donare" />
-                  <Label layoutX="32.0" layoutY="254.0" text="Programarile tale" />
-                  <Label layoutX="32.0" layoutY="294.0" styleClass="label-info" text="Momentan nu ai nicio programare" />
-                  <HBox layoutY="321.0" prefHeight="140.0" prefWidth="883.0" />
-                  <Label layoutX="32.0" layoutY="469.0" text="Donatiile tale anterioare" />
-                  <Label layoutX="34.0" layoutY="503.0" styleClass="label-info" text="Nu ai facut nicio donatie! De ce nu programezi una?" />
+                  <Label fx:id="labelName" layoutX="32.0" layoutY="25.0" text="Salut, " />
+                  <Label fx:id="labelEligibility" layoutX="37.0" layoutY="70.0" styleClass="label-info" text="Nu ti-ai verificat eligiblitatea! Vrei sa o faci?" />
+                  <Button fx:id="affirmativeEligibilityButton" layoutX="400.0" layoutY="63.0" mnemonicParsing="false" styleClass="button2" text="Da" />
+                  <Button fx:id="negativeEligibilityButton" layoutX="461.0" layoutY="63.0" mnemonicParsing="false" styleClass="button2" text="Nu" />
+                  <Button fx:id="checkDoctorButton" layoutX="525.0" layoutY="63.0" mnemonicParsing="false" styleClass="button2" text="Consulta un medic" />
                </children></AnchorPane>
         </content>
       </ScrollPane>
@@ -26,13 +22,13 @@
    <top>
       <HBox prefHeight="47.0" prefWidth="600.0" styleClass="hbox_bar" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" styleClass="button2" text="Acasa">
+            <Button fx:id="homeButton" mnemonicParsing="false" styleClass="button2" text="Acasa">
                <HBox.margin>
                   <Insets left="6.0" top="2.0" />
                </HBox.margin></Button>
             <Button fx:id="donationCentersButton" mnemonicParsing="false" styleClass="button2" text="Centre Donare">
                <HBox.margin>
-                  <Insets left="160.0" top="2.0" />
+                  <Insets left="227.0" top="2.0" />
                </HBox.margin></Button>
             <Button fx:id="donationAppointmentButton" mnemonicParsing="false" styleClass="button2" text="Programare Donare">
                <HBox.margin>
@@ -43,10 +39,6 @@
                   <Insets top="2.0" />
                </HBox.margin></Button>
             <Button fx:id="profileButton" mnemonicParsing="false" styleClass="button2" text="Gestioneaza Profil">
-               <HBox.margin>
-                  <Insets top="2.0" />
-               </HBox.margin></Button>
-            <Button fx:id="buttonExit" mnemonicParsing="false" prefWidth="87.0" styleClass="button2" text="Iesi">
                <HBox.margin>
                   <Insets top="2.0" />
                </HBox.margin></Button>

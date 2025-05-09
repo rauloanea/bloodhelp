@@ -89,4 +89,9 @@ public class UserRepository extends AbstractRepository<Long, User> {
             throw new RuntimeException("[USER] Error finding user by email", e);
         }
     }
+
+    @Override
+    protected String getUpdateIdentifier() {
+        return " WHERE id = ?";
+    }
 }

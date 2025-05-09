@@ -74,4 +74,9 @@ public class AppointmentRepository extends AbstractRepository<Long, Appointment>
     protected String getSelectOneString(){
         return "SELECT * FROM " + tableName + " WHERE id = ?";
     }
+
+    @Override
+    protected String getUpdateIdentifier() {
+        return " WHERE id = ?";
+    }
 }

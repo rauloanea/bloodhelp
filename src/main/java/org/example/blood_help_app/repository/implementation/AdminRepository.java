@@ -62,6 +62,11 @@ public class AdminRepository extends AbstractRepository<Long, Admin> {
         return "access_level = ?";
     }
 
+    @Override
+    protected String getUpdateIdentifier() {
+        return " WHERE user_id = ?";
+    }
+
     // Additional admin-specific methods could be added here
     public Optional<Admin> findByAccessLevel(AccessLevelEnum accessLevel) {
         String sql = "SELECT a.* FROM admins a WHERE a.access_level = ?";

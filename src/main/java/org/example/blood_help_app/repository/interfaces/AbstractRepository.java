@@ -91,7 +91,7 @@ public abstract class AbstractRepository<ID, E extends Entity<ID>> implements IR
             return Optional.of(updatedEntity);
         }
 
-        String sql = "UPDATE " + tableName + " SET " + getUpdateColumns() + " WHERE id = ?";
+        String sql = "UPDATE " + tableName + " SET " + getUpdateColumns() + getUpdateIdentifier();
 
         try (var connection = jdbcUtils.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -103,6 +103,8 @@ public abstract class AbstractRepository<ID, E extends Entity<ID>> implements IR
             throw new RuntimeException("Error updating entity", e);
         }
     }
+
+    protected abstract String getUpdateIdentifier();
 
     @Override
     public Optional<E> findOne(ID id) {
