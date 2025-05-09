@@ -1,0 +1,6 @@
+package org.example.blood_help_app.controllers.factory;
+
+public enum ControllerType {
+    LOGIN, CREATE_ACCOUNT, DONOR_HOME, ADMIN_HOME, DOCTOR_HOME,
+    PROFILE_PAGE,
+}

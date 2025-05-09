@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <ScrollPane fitToHeight="false" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="690.0" prefWidth="885.0">
+               <children>
+                  <Label layoutX="368.0" layoutY="61.0" styleClass="label-blood" text="BloodHelp" />
+                  <Label layoutX="327.0" layoutY="116.0" styleClass="label-info" text="Impreuna putem face o schimbare" />
+                  <Button fx:id="donationCentersSecondButton" layoutX="275.0" layoutY="155.0" mnemonicParsing="false" styleClass="button2" text="Cauta centru donare" />
+                  <Button fx:id="donationAppointmentSecondButton" layoutX="473.0" layoutY="155.0" mnemonicParsing="false" text="Programeaza donare" />
+                  <Label layoutX="32.0" layoutY="254.0" text="Programarile tale" />
+                  <Label layoutX="32.0" layoutY="294.0" styleClass="label-info" text="Momentan nu ai nicio programare" />
+                  <HBox layoutY="321.0" prefHeight="140.0" prefWidth="883.0" />
+                  <Label layoutX="32.0" layoutY="469.0" text="Donatiile tale anterioare" />
+                  <Label layoutX="48.0" layoutY="501.0" styleClass="label-info" text="Label" />
+               </children></AnchorPane>
+        </content>
+      </ScrollPane>
+   </center>
+   <top>
+      <HBox prefHeight="47.0" prefWidth="600.0" styleClass="hbox_bar" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" text="Imagine">
+               <HBox.margin>
+                  <Insets left="6.0" top="2.0" />
+               </HBox.margin></Button>
+            <Button fx:id="donationCentersButton" mnemonicParsing="false" styleClass="button2" text="Centre Donare">
+               <HBox.margin>
+                  <Insets left="227.0" top="2.0" />
+               </HBox.margin></Button>
+            <Button fx:id="donationAppointmentButton" mnemonicParsing="false" styleClass="button2" text="Programare Donare">
+               <HBox.margin>
+                  <Insets top="2.0" />
+               </HBox.margin></Button>
+            <Button fx:id="donationHistoryButton" mnemonicParsing="false" styleClass="button2" text="Istoric Donari">
+               <HBox.margin>
+                  <Insets top="2.0" />
+               </HBox.margin></Button>
+            <Button fx:id="profileButton" mnemonicParsing="false" styleClass="button2" text="Gestioneaza Profil">
+               <HBox.margin>
+                  <Insets top="2.0" />
+               </HBox.margin></Button>
+         </children></HBox>
+   </top>
+</BorderPane>

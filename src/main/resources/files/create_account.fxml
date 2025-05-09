@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="695.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="200.0" layoutX="496.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@welcomeImage.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="backButton" layoutX="394.0" layoutY="344.0" mnemonicParsing="false" styleClass="button2" text="Back" />
+      <TextField fx:id="nameField" layoutX="29.0" layoutY="73.0" prefHeight="30.0" prefWidth="435.0" promptText="Nume" />
+      <TextField fx:id="emailField" layoutX="29.0" layoutY="117.0" prefHeight="30.0" prefWidth="435.0" promptText="Email" />
+      <TextField fx:id="usernameField" layoutX="29.0" layoutY="161.0" prefHeight="30.0" prefWidth="435.0" promptText="Username" />
+      <PasswordField fx:id="passwordField" layoutX="29.0" layoutY="203.0" prefHeight="30.0" prefWidth="200.0" promptText="Parola" />
+      <PasswordField fx:id="passwordCheckField" layoutX="247.0" layoutY="204.0" prefHeight="30.0" prefWidth="216.0" promptText="Repeta parola" />
+      <DatePicker fx:id="birthdayPicker" layoutX="247.0" layoutY="247.0" prefHeight="30.0" prefWidth="216.0" promptText="Zi de nastere" />
+      <TextField fx:id="phoneNumberField" layoutX="29.0" layoutY="247.0" prefHeight="30.0" prefWidth="200.0" promptText="Numar de telefon" />
+      <Button fx:id="createAccButton" layoutX="184.0" layoutY="302.0" mnemonicParsing="false" text="Creeaza cont" />
+      <Label layoutX="29.0" layoutY="22.0" text="Creeaza un cont nou" />
+      <Label fx:id="labelError" layoutX="465.0" layoutY="199.0" prefHeight="40.0" prefWidth="19.0" styleClass="label-error" text="!" textFill="RED">
+         <font>
+            <Font size="31.0" />
+         </font></Label>
+   </children>
+</AnchorPane>
