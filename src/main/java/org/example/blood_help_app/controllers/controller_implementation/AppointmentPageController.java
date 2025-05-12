@@ -1,6 +1,7 @@
 package org.example.blood_help_app.controllers.controller_implementation;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -9,6 +10,8 @@ import org.example.blood_help_app.controllers.factory.ControllerFactory;
 import org.example.blood_help_app.controllers.factory.ControllerType;
 import org.example.blood_help_app.domain.donationsdata.DonationCenter;
 
+import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class AppointmentPageController extends Controller{
@@ -50,7 +53,29 @@ public class AppointmentPageController extends Controller{
         setCentersData();
     }
 
-    private void handleFormSending() {}
+    private void handleFormSending() {
+        var date = datePicker.getValue();
+        var hour = hourDropdown.getValue();
+        var minutes = minutesDropdown.getValue();
+
+        var appointmentDateTime = LocalDateTime.of(date, new Time(hour, minutes, 0).toLocalTime());
+
+        var center = centerDropdown.getValue();
+
+        try{
+            this.services.makeAppointment(
+                    ControllerFactory.getInstance().getUser(),
+                    center,
+                    appointmentDateTime
+            );
+
+            ControllerFactory.getInstance().showMessage(Alert.AlertType.CONFIRMATION, null, "Felicitari!",
+                    "Programarea la " + center.getName() + " in data de " + date + " la ora " + hour + " a fost efectuata cu succes!");
+        } catch (Exception e){
+            ControllerFactory.getInstance().showMessage(Alert.AlertType.ERROR, null, "Eroare",
+                    "S-a produs o eroare interna: " + e.getMessage());
+        }
+    }
 
     private void setCentersData() {
         centers = services.getCenters();

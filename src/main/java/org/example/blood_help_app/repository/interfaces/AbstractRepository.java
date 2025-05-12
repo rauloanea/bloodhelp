@@ -116,7 +116,11 @@ public abstract class AbstractRepository<ID, E extends Entity<ID>> implements IR
 
         try (var connection = jdbcUtils.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setLong(1, (Long) id);
+            if(id.getClass() == Long.class){
+                ps.setLong(1, (Long) id);
+            }
+            else
+                ps.setInt(1, (Integer) id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return Optional.of(mapResultSetToEntity(rs));

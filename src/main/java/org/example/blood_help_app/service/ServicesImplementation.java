@@ -4,10 +4,12 @@ import org.example.blood_help_app.domain.donationsdata.Appointment;
 import org.example.blood_help_app.domain.donationsdata.BloodUnit;
 import org.example.blood_help_app.domain.donationsdata.Donation;
 import org.example.blood_help_app.domain.donationsdata.DonationCenter;
+import org.example.blood_help_app.domain.enums.AppointmentStatus;
 import org.example.blood_help_app.domain.users.Admin;
 import org.example.blood_help_app.domain.users.Doctor;
 import org.example.blood_help_app.domain.users.Donor;
 import org.example.blood_help_app.domain.users.User;
+import org.example.blood_help_app.repository.implementation.AppointmentRepository;
 import org.example.blood_help_app.repository.implementation.UserRepository;
 import org.example.blood_help_app.repository.interfaces.IRepository;
 import org.example.blood_help_app.utils.PasswordEncryption;
@@ -24,7 +26,7 @@ public class ServicesImplementation {
     private final IRepository<Long, Donation> donationRepo;
     private final IRepository<Integer, DonationCenter> donationCenterRepo;
     private final IRepository<Long, BloodUnit> bloodUnitRepo;
-    private final IRepository<Long, Appointment> appointmentRepo;
+    private final AppointmentRepository appointmentRepo;
 
     public ServicesImplementation(
             UserRepository userRepo,
@@ -34,7 +36,7 @@ public class ServicesImplementation {
             IRepository<Long, Donation> donationRepo,
             IRepository<Integer, DonationCenter> donationCenterRepo,
             IRepository<Long, BloodUnit> bloodUnitRepo,
-            IRepository<Long, Appointment> appointmentRepo
+            AppointmentRepository appointmentRepo
     ) {
         this.userRepo = userRepo;
         this.adminRepo = adminRepo;
@@ -85,5 +87,17 @@ public class ServicesImplementation {
 
     public List<DonationCenter> getCenters(){
         return this.donationCenterRepo.findAll();
+    }
+
+    public void makeAppointment(Donor user, DonationCenter center, LocalDateTime appointmentDateTime) {
+        Appointment appointment = new Appointment(user, appointmentDateTime, center, AppointmentStatus.SCHEDULED);
+
+        if(this.appointmentRepo.checkDisponibility(center.getId(), appointmentDateTime).isPresent())
+            throw new RuntimeException("Exista deja o programare la centrul " + center.getName() + " la data si ora selectata!");
+
+        var result = this.appointmentRepo.save(appointment);
+        if(result.isEmpty()){
+            throw new RuntimeException("Problema la salvarea programarii! Reincearca!");
+        }
     }
 }

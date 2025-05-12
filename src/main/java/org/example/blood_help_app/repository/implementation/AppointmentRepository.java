@@ -9,7 +9,9 @@ import org.example.blood_help_app.repository.interfaces.AbstractRepository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.Properties;
 
 public class AppointmentRepository extends AbstractRepository<Long, Appointment> {
@@ -78,5 +80,23 @@ public class AppointmentRepository extends AbstractRepository<Long, Appointment>
     @Override
     protected String getUpdateIdentifier() {
         return " WHERE id = ?";
+    }
+
+    public Optional<Appointment> checkDisponibility(Integer center, LocalDateTime date){
+        String sql = "Select * from appointments where donation_center_id = ? and appointment_date = ?";
+
+        try(var connection = jdbcUtils.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setInt(1, center);
+            stmt.setObject(2, date);
+
+            var rs = stmt.executeQuery();
+            if(rs.next()){
+                return Optional.of(mapResultSetToEntity(rs));
+            }
+            return Optional.empty();
+        }catch (SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }
