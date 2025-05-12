@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="402.0" prefWidth="582.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="38.0" layoutY="25.0" text="Programeaza o donatie:" />
+      <Button fx:id="sendFormButton" layoutX="152.0" layoutY="328.0" mnemonicParsing="false" text="Programeaza" />
+      <Button fx:id="cancelButton" layoutX="326.0" layoutY="328.0" mnemonicParsing="false" styleClass="button2" text="Anuleaza" />
+      <Label layoutX="41.0" layoutY="59.0" prefHeight="42.0" prefWidth="498.0" styleClass="label-info" text="Completeaza datele de mai jos pentru a realiza programarea" />
+      <DatePicker fx:id="datePicker" layoutX="38.0" layoutY="137.0" prefHeight="38.0" prefWidth="250.0" />
+      <Label layoutX="37.0" layoutY="111.0" styleClass="label-info" text="Data" />
+      <Label layoutX="312.0" layoutY="110.0" styleClass="label-info" text="Ora" />
+      <ComboBox fx:id="hourDropdown" layoutX="313.0" layoutY="137.0" prefHeight="7.0" prefWidth="112.0" styleClass="text-field" />
+      <ComboBox fx:id="minutesDropdown" layoutX="427.0" layoutY="137.0" prefHeight="7.0" prefWidth="112.0" styleClass="text-field" />
+      <Label layoutX="41.0" layoutY="227.0" styleClass="label-info" text="Judet" />
+      <ComboBox fx:id="countyDropdown" layoutX="37.0" layoutY="254.0" prefHeight="38.0" prefWidth="171.0" styleClass="text-field" />
+      <Label layoutX="221.0" layoutY="227.0" styleClass="label-info" text="Centru Donare" />
+      <ComboBox fx:id="centerDropdown" layoutX="221.0" layoutY="254.0" prefHeight="38.0" prefWidth="314.0" styleClass="text-field" />
+   </children>
+</AnchorPane>

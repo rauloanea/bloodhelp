@@ -59,6 +59,7 @@ public class ControllerFactory {
             case CREATE_ACCOUNT -> runCreateAccountPage();
             case DONOR_PROFILE_PAGE -> runDonorProfilePage();
             case ELIGIBILITY_FORM -> runEligibilityFormPage();
+            case MAKE_APPOINTMENT_FORM -> runAppointmentFormPage();
         }
 
         if(buttonTrigger != null){
@@ -143,6 +144,16 @@ public class ControllerFactory {
     private void runEligibilityFormPage(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/eligibility_form.fxml"));
         EligibilityFormController controller = new EligibilityFormController();
+//        controller.setCurrentUser(this.currentUser);
+        controller.setServices(services);
+        loader.setController(controller);
+
+        this.runGenericPage(loader);
+    }
+
+    private void runAppointmentFormPage(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/make_donation_appointment.fxml"));
+        AppointmentPageController controller = new AppointmentPageController();
 //        controller.setCurrentUser(this.currentUser);
         controller.setServices(services);
         loader.setController(controller);

@@ -33,22 +33,18 @@ public class ProfileController extends Controller {
         this.affirmativeEligibilityButton.setOnAction(_ ->
                 ControllerFactory.getInstance().runPage(ControllerType.ELIGIBILITY_FORM, affirmativeEligibilityButton));
         this.checkDoctorButton.setOnAction(_ -> {
-            try{
-                Thread.sleep(500);
-                ControllerFactory.getInstance().showMessage(
-                        Alert.AlertType.CONFIRMATION,
-                        "Succes",
-                        "Felicitari",
-                        "Programarea a fost facuta cu succes! Vei primi informatiile privind programarea facuta pe mail!"
-                );
+            //TODO: implement doctor notification, then refactor
+            ControllerFactory.getInstance().showMessage(
+                    Alert.AlertType.CONFIRMATION,
+                    "Succes",
+                    "Felicitari",
+                    "Programarea a fost facuta cu succes! Vei primi informatiile privind programarea facuta pe mail!"
+            );
 
-                this.services.setDonorEligibility(ControllerFactory.getInstance().getUser(), 2);
+            this.services.setDonorEligibility(ControllerFactory.getInstance().getUser(), 2);
 
-                this.labelEligibility.setText("Vei fi anuntat de catre medic daca esti eligibil sau nu");
-                setVisibilityForEligibilityButtons(false);
-            }catch (InterruptedException e){
-                e.printStackTrace();
-            }
+            this.labelEligibility.setText("Vei fi anuntat de catre medic daca esti eligibil sau nu");
+            setVisibilityForEligibilityButtons(false);
         });
 
         this.checkEligibility();

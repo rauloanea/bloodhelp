@@ -12,15 +12,19 @@ import org.example.blood_help_app.repository.implementation.UserRepository;
 import org.example.blood_help_app.repository.interfaces.IRepository;
 import org.example.blood_help_app.utils.PasswordEncryption;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ServicesImplementation {
-    private UserRepository userRepo;
-    private IRepository<Long, Admin> adminRepo;
-    private IRepository<Long, Donor> donorRepo;
-    private IRepository<Long, Doctor> doctorRepo;
-    private IRepository<Long, Donation> donationRepo;
-    private IRepository<Integer, DonationCenter> donationCenterRepo;
-    private IRepository<Long, BloodUnit> bloodUnitRepo;
-    private IRepository<Long, Appointment> appointmentRepo;
+    private final UserRepository userRepo;
+    private final IRepository<Long, Admin> adminRepo;
+    private final IRepository<Long, Donor> donorRepo;
+    private final IRepository<Long, Doctor> doctorRepo;
+    private final IRepository<Long, Donation> donationRepo;
+    private final IRepository<Integer, DonationCenter> donationCenterRepo;
+    private final IRepository<Long, BloodUnit> bloodUnitRepo;
+    private final IRepository<Long, Appointment> appointmentRepo;
 
     public ServicesImplementation(
             UserRepository userRepo,
@@ -71,5 +75,15 @@ public class ServicesImplementation {
     public void setDonorEligibility(Donor user, Integer value){
         user.setEligibility(value);
         this.donorRepo.update(user);
+    }
+
+    public void checkEligibility(Donor user, Integer age, String gender, Double weight, LocalDateTime lastDonation, String otherInfo) {
+        if(lastDonation != null && lastDonation.getYear() == LocalDateTime.now().getYear()
+                && LocalDateTime.now().getMonth().getValue() - lastDonation.getMonth().getValue() < 4)
+            throw new RuntimeException("Nu poti dona deoarece ai facut o donatie in ultimele 3 luni!");
+    }
+
+    public List<DonationCenter> getCenters(){
+        return this.donationCenterRepo.findAll();
     }
 }
