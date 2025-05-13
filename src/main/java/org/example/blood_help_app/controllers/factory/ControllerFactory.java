@@ -74,6 +74,9 @@ public class ControllerFactory {
 
             Stage newStage = new Stage();
             Scene newScene = new Scene(newWindowRoot);
+
+            newScene.getStylesheets().add(getClass().getResource("/files/style.css").toExternalForm());
+
             newStage.initStyle(StageStyle.UNDECORATED);
             newStage.setScene(newScene);
             newStage.show();

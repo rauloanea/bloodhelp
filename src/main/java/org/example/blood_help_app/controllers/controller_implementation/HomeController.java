@@ -3,55 +3,223 @@ package org.example.blood_help_app.controllers.controller_implementation;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.blood_help_app.controllers.factory.ControllerFactory;
 import org.example.blood_help_app.controllers.factory.ControllerType;
+import org.example.blood_help_app.domain.donationsdata.Appointment;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import org.example.blood_help_app.domain.donationsdata.Donation;
+import org.example.blood_help_app.domain.donationsdata.DonationCenter;
+import org.example.blood_help_app.domain.enums.AppointmentStatus;
+import org.example.blood_help_app.domain.enums.DonationStatusEnum;
 
 public class HomeController extends Controller {
-    @FXML
-    private Button profileButton;
-    @FXML
-    private Button donationHistoryButton;
-    @FXML
-    private Button donationAppointmentButton;
-    @FXML
-    private Button donationCentersButton;
-    @FXML
-    private Button donationAppointmentSecondButton;
-    @FXML
-    private Button donationCentersSecondButton;
-    @FXML
-    private Button buttonExit;
+    // Butoane
+    @FXML private Button profileButton;
+    @FXML private Button donationHistoryButton;
+    @FXML private Button donationAppointmentButton;
+    @FXML private Button donationCentersButton;
+    @FXML private Button donationAppointmentSecondButton;
+    @FXML private Button donationCentersSecondButton;
+    @FXML private Button buttonExit;
+
+    // Componente pentru programări
+    @FXML private Label appointmentsLabel;
+    @FXML private HBox hboxAppointments;
+
+    // Componente pentru donații
+    @FXML private Label labelDonations;
+    @FXML private HBox hboxPastDonations;
+
+    private static final DateTimeFormatter DATE_FORMATTER =
+            DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm");
 
     @FXML
     private void initialize() {
-        this.profileButton.setOnAction(_ -> {
-            ControllerFactory.getInstance().runPage(ControllerType.DONOR_PROFILE_PAGE, profileButton);
-        });
-
-        this.buttonExit.setOnAction(_ -> {
-            Stage currentStage = (Stage) this.buttonExit.getScene().getWindow();
-            currentStage.close();
-        });
-
-        this.donationAppointmentButton.setOnAction(_ ->
-                handleAppointment(donationAppointmentButton)
-        );
-        this.donationAppointmentSecondButton.setOnAction(_ ->
-                handleAppointment(donationAppointmentSecondButton));
+        setupButtonActions();
+        loadAppointments();
+        loadDonations();
     }
 
-    private void handleAppointment(Button triggerButton){
-        if(ControllerFactory.getInstance().getUser().getEligibility() == 1)
-            ControllerFactory.getInstance().runPage(ControllerType.MAKE_APPOINTMENT_FORM, triggerButton);
-        if(ControllerFactory.getInstance().getUser().getEligibility() == 2)
-            ControllerFactory.getInstance().showMessage(Alert.AlertType.WARNING, null, "Trebuie sa astepti!",
-                    "Un doctor iti va verifica imediat formularul de eligibilitate! Pana atunci, trebuie sa astepti.");
-        if(ControllerFactory.getInstance().getUser().getEligibility() == -1)
-            ControllerFactory.getInstance().showMessage(Alert.AlertType.WARNING, null, "Eligibilitate neverificata!",
-                    "Inainte de a programa o donare, verifica daca esti eligibil! Poti face asta din \"Gestioneaza profil\"");
-        if(ControllerFactory.getInstance().getUser().getEligibility() == 0)
-            ControllerFactory.getInstance().showMessage(Alert.AlertType.WARNING, null, "Momentan nu poti face o programare!",
-                    "Nu esti eligibil pentru donare!");
+    private void setupButtonActions() {
+        profileButton.setOnAction(_ -> navigateTo(ControllerType.DONOR_PROFILE_PAGE, profileButton));
+        buttonExit.setOnAction(_ -> ((Stage) buttonExit.getScene().getWindow()).close());
+
+        donationAppointmentButton.setOnAction(_ -> handleAppointmentAction());
+        donationAppointmentSecondButton.setOnAction(_ -> handleAppointmentAction());
+//        donationHistoryButton.setOnAction(_ -> navigateTo(ControllerType.DONATION_HISTORY, donationHistoryButton));
+//        donationCentersButton.setOnAction(_ -> navigateTo(ControllerType.DONATION_CENTERS, donationCentersButton));
+//        donationCentersSecondButton.setOnAction(_ -> navigateTo(ControllerType.DONATION_CENTERS, donationCentersSecondButton));
+    }
+
+    private void navigateTo(ControllerType type, Button source) {
+        ControllerFactory.getInstance().runPage(type, source);
+    }
+
+    private void handleAppointmentAction() {
+        int eligibility = ControllerFactory.getInstance().getUser().getEligibility();
+        String title, message;
+
+        switch (eligibility) {
+            case 1:
+                navigateTo(ControllerType.MAKE_APPOINTMENT_FORM, donationAppointmentButton);
+                return;
+            case 2:
+                title = "Trebuie să aștepți!";
+                message = "Un doctor îți va verifica imediat formularul de eligibilitate! Până atunci, trebuie să aștepți.";
+                break;
+            case -1:
+                title = "Eligibilitate neverificată!";
+                message = "Înainte de a programa o donare, verifică dacă ești eligibil! Poți face asta din \"Gestionează profil\"";
+                break;
+            case 0:
+                title = "Momentan nu poți face o programare!";
+                message = "Nu ești eligibil pentru donare!";
+                break;
+            default:
+                return;
+        }
+
+        ControllerFactory.getInstance().showMessage(
+                Alert.AlertType.WARNING,
+                null,
+                title,
+                message
+        );
+    }
+
+    private void loadAppointments() {
+        List<Appointment> appointments = services.findAppointments(ControllerFactory.getInstance().getUser());
+
+        if (appointments.isEmpty()) {
+            showNoAppointments();
+            return;
+        }
+
+        showAppointments(appointments);
+    }
+
+    private void showNoAppointments() {
+        appointmentsLabel.setText("Momentan nu ai nicio programare");
+        hboxAppointments.setManaged(false);
+        hboxAppointments.setVisible(false);
+    }
+
+    private void showAppointments(List<Appointment> appointments) {
+        appointmentsLabel.setText("Poți vedea mai jos informații despre viitoarele tale programări");
+        hboxAppointments.getChildren().clear();
+
+        appointments.stream()
+                .limit(3)
+                .map(this::createAppointmentCard)
+                .forEach(hboxAppointments.getChildren()::add);
+
+        hboxAppointments.setOnMouseClicked(_ ->
+                navigateTo(ControllerType.DONOR_PROFILE_PAGE, profileButton));
+    }
+
+    private void loadDonations() {
+        List<Donation> donations = services.findDonations(ControllerFactory.getInstance().getUser());
+
+        if (donations.isEmpty()) {
+            showNoDonations();
+            return;
+        }
+
+        showDonations(donations);
+    }
+
+    private void showNoDonations() {
+        labelDonations.setText("Nu ai făcut nicio donație! De ce nu programezi una?");
+        hboxPastDonations.setManaged(false);
+        hboxPastDonations.setVisible(false);
+    }
+
+    private void showDonations(List<Donation> donations) {
+        labelDonations.setText("Istoricul ultimelor tale donații");
+        hboxPastDonations.getChildren().clear();
+
+        donations.stream()
+                .limit(3)
+                .map(this::createDonationCard)
+                .forEach(hboxPastDonations.getChildren()::add);
+
+//        hboxPastDonations.setOnMouseClicked(_ -> navigateTo(ControllerType.DONATION_HISTORY, donationHistoryButton));
+    }
+
+    private VBox createAppointmentCard(Appointment appointment) {
+        return createGenericCard(
+                "Centru: " + appointment.getDonationCenter().getName(),
+                "Data: " + formatDate(appointment.getDate()),
+                "Status: " + translateAppointmentStatus(appointment.getStatus()),
+                false
+        );
+    }
+
+    private VBox createDonationCard(Donation donation) {
+        DonationCenter center = services.getDonationCenterByID(donation.getDonationCenter());
+
+        return createGenericCard(
+                "Centru: " + center.getName() + ", cantitate: " + String.format("%.2f l", donation.getQuantity()),
+                "Data: " + formatDate(donation.getDonationDate()),
+                "Status: " + translateDonationStatus(donation.getStatus()),
+                true
+        );
+    }
+
+    private VBox createGenericCard(String line1, String line2, String line3, boolean isDonation) {
+        VBox card = new VBox(5);
+        card.getStyleClass().add(isDonation ? "donation-card" : "appointment-card");
+        card.setMaxWidth(Region.USE_PREF_SIZE);
+
+        Label label1 = createLabel(line1, true);
+        Label label2 = createLabel(line2, true);
+        Label label3 = createLabel(line3, false);
+
+        card.getChildren().addAll(label1, label2, label3);
+        return card;
+    }
+
+    private Label createLabel(String text, boolean wrapText) {
+        Label label = new Label(text);
+        label.getStyleClass().add("label-info");
+        if (wrapText) {
+            label.setWrapText(true);
+            label.setMaxWidth(Double.MAX_VALUE);
+        }
+        return label;
+    }
+
+    private String formatDate(LocalDateTime dateTime) {
+        return dateTime.format(DATE_FORMATTER);
+    }
+
+    private String translateAppointmentStatus(AppointmentStatus status) {
+        switch (status) {
+            case SCHEDULED: return "Programată";
+            case CONFIRMED: return "Confirmată";
+            case CANCELED: return "Anulată";
+            case COMPLETED: return "Efectuată";
+            default: return status.toString();
+        }
+    }
+
+    private String translateDonationStatus(DonationStatusEnum status) {
+        switch (status) {
+            case PENDING: return "În așteptare";
+            case COMPLETED: return "Completă";
+            case TESTED: return "Testată";
+            case APPROVED: return "Acceptată";
+            case REJECTED: return "Respinsă";
+            default: return status.toString();
+        }
     }
 }

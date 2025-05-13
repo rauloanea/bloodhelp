@@ -10,6 +10,7 @@ import org.example.blood_help_app.domain.users.Doctor;
 import org.example.blood_help_app.domain.users.Donor;
 import org.example.blood_help_app.domain.users.User;
 import org.example.blood_help_app.repository.implementation.AppointmentRepository;
+import org.example.blood_help_app.repository.implementation.DonationRepository;
 import org.example.blood_help_app.repository.implementation.UserRepository;
 import org.example.blood_help_app.repository.interfaces.IRepository;
 import org.example.blood_help_app.utils.PasswordEncryption;
@@ -23,7 +24,7 @@ public class ServicesImplementation {
     private final IRepository<Long, Admin> adminRepo;
     private final IRepository<Long, Donor> donorRepo;
     private final IRepository<Long, Doctor> doctorRepo;
-    private final IRepository<Long, Donation> donationRepo;
+    private final DonationRepository donationRepo;
     private final IRepository<Integer, DonationCenter> donationCenterRepo;
     private final IRepository<Long, BloodUnit> bloodUnitRepo;
     private final AppointmentRepository appointmentRepo;
@@ -33,7 +34,7 @@ public class ServicesImplementation {
             IRepository<Long, Admin> adminRepo,
             IRepository<Long, Donor> donorRepo,
             IRepository<Long, Doctor> doctorRepo,
-            IRepository<Long, Donation> donationRepo,
+            DonationRepository donationRepo,
             IRepository<Integer, DonationCenter> donationCenterRepo,
             IRepository<Long, BloodUnit> bloodUnitRepo,
             AppointmentRepository appointmentRepo
@@ -99,5 +100,26 @@ public class ServicesImplementation {
         if(result.isEmpty()){
             throw new RuntimeException("Problema la salvarea programarii! Reincearca!");
         }
+    }
+
+    public List<Appointment> findAppointments(Donor user){
+        return this.appointmentRepo.findFutureAppointmentsChronological(user);
+    }
+
+    public void cancelAppointment(Appointment appointment){
+        try {
+            this.appointmentRepo.delete(appointment.getId());
+        }catch (Exception e){
+            throw new RuntimeException("Eroare la stergerea programarii din baza de date!");
+        }
+    }
+
+    public List<Donation> findDonations(Donor user){
+        return this.donationRepo.findUserDonations(user);
+    }
+
+    public DonationCenter getDonationCenterByID(Integer id){
+        var result = this.donationCenterRepo.findOne(id);
+        return result.orElse(null);
     }
 }

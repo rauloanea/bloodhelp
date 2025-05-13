@@ -3,9 +3,16 @@ package org.example.blood_help_app.controllers.controller_implementation;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import org.example.blood_help_app.controllers.factory.ControllerFactory;
 import org.example.blood_help_app.controllers.factory.ControllerType;
+import org.example.blood_help_app.domain.donationsdata.Appointment;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 public class ProfileController extends Controller {
     @FXML
@@ -20,6 +27,10 @@ public class ProfileController extends Controller {
     private Button checkDoctorButton;
     @FXML
     private Label labelName;
+    @FXML
+    private VBox vboxAppointments;
+    @FXML
+    private Label labelAppointments;
 
     @FXML
     private void initialize(){
@@ -48,6 +59,8 @@ public class ProfileController extends Controller {
         });
 
         this.checkEligibility();
+
+        this.setAppointmentsInfo();
     }
 
     private void checkEligibility() {
@@ -91,5 +104,85 @@ public class ProfileController extends Controller {
         this.labelEligibility.setManaged(false);
 
         setVisibilityForEligibilityButtons(false);
+    }
+
+    private void setAppointmentsInfo(){
+        var appointments = this.services.findAppointments(ControllerFactory.getInstance().getUser());
+
+        if(appointments.isEmpty()){
+            labelAppointments.setText("Momentan nu ai nicio programare facuta!");
+            vboxAppointments.setVisible(false);
+            vboxAppointments.setManaged(false);
+
+            return;
+        }
+
+        //TODO: implement appointments on screen logic
+        labelAppointments.setText("De aici poti vedea si anula programarile tale viitoare");
+
+        vboxAppointments.setVisible(true);
+        vboxAppointments.setManaged(true);
+        vboxAppointments.getChildren().clear(); // Șterge cardurile existente
+
+        // Adaugă fiecare programare ca card
+        appointments.forEach(appointment -> {
+            VBox appointmentCard = createAppointmentCard(appointment);
+            vboxAppointments.getChildren().add(appointmentCard);
+        });
+    }
+
+    private VBox createAppointmentCard(Appointment appointment) {
+        // 1. Container principal
+        VBox card = new VBox(10);
+        card.getStyleClass().add("vbox-card");
+        card.setMaxWidth(Double.MAX_VALUE);
+
+        // 2. Informații programare
+        Label centerLabel = new Label("Centru: " + appointment.getDonationCenter().getName());
+        centerLabel.getStyleClass().add("label-info");
+        centerLabel.setWrapText(true);
+
+        Label dateLabel = new Label("Data: " + formatDateTime(appointment.getDate()));
+        dateLabel.getStyleClass().add("label-info");
+
+        Label statusLabel = new Label("Status: " + appointment.getStatus());
+        statusLabel.getStyleClass().add("label-info");
+
+        // 3. Buton anulare
+        Button cancelButton = new Button("Anulează programarea");
+        cancelButton.getStyleClass().add("buttonExit");
+        cancelButton.setOnAction(e -> handleCancelAppointment(appointment));
+
+        // 4. Adaugă elementele în card
+        card.getChildren().addAll(centerLabel, dateLabel, statusLabel, cancelButton);
+
+        return card;
+    }
+
+    private String formatDateTime(LocalDateTime dateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm");
+        return dateTime.format(formatter);
+    }
+
+    private void handleCancelAppointment(Appointment appointment) {
+        // Confirmare înainte de anulare
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmation.setTitle("Confirmare anulare");
+        confirmation.setHeaderText("Sigur dorești să anulezi programarea?");
+        confirmation.setContentText("Programarea la " + appointment.getDonationCenter().getName() +
+                " pe " + formatDateTime(appointment.getDate()));
+
+        Optional<ButtonType> result = confirmation.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                services.cancelAppointment(appointment);
+                setAppointmentsInfo();
+
+                ControllerFactory.getInstance().showMessage(Alert.AlertType.CONFIRMATION, null, "Succes",
+                        "Programarea a fost anulata cu succes!");
+            }catch (Exception e){
+                ControllerFactory.getInstance().showMessage(Alert.AlertType.ERROR, null, "Eroare", e.getMessage());
+            }
+        }
     }
 }

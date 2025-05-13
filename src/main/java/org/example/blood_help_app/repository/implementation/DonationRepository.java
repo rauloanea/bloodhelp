@@ -11,6 +11,8 @@ import org.example.blood_help_app.domain.enums.BloodTypeEnum;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.time.LocalDateTime;
 
@@ -97,5 +99,24 @@ public class DonationRepository extends AbstractRepository<Long, Donation> {
     @Override
     protected String getUpdateIdentifier() {
         return " WHERE id = ?";
+    }
+
+    public List<Donation> findUserDonations(Donor user){
+        String sql = "SELECT * from donations where donor_id = ? order by donation_date desc";
+
+        try(var conn = this.jdbcUtils.getConnection();
+        var stmt = conn.prepareStatement(sql)){
+            stmt.setLong(1, user.getId());
+
+            var rs = stmt.executeQuery();
+            var lst = new ArrayList<Donation>();
+            while(rs.next()){
+                lst.add(mapResultSetToEntity(rs));
+            }
+
+            return lst;
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 }

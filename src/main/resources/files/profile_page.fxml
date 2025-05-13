@@ -11,10 +11,13 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="690.0" prefWidth="885.0">
                <children>
                   <Label fx:id="labelName" layoutX="32.0" layoutY="25.0" text="Salut, " />
-                  <Label fx:id="labelEligibility" layoutX="37.0" layoutY="70.0" styleClass="label-info" text="Nu ti-ai verificat eligiblitatea! Vrei sa o faci?" />
-                  <Button fx:id="affirmativeEligibilityButton" layoutX="400.0" layoutY="63.0" mnemonicParsing="false" styleClass="button2" text="Da" />
-                  <Button fx:id="negativeEligibilityButton" layoutX="461.0" layoutY="63.0" mnemonicParsing="false" styleClass="button2" text="Nu" />
-                  <Button fx:id="checkDoctorButton" layoutX="525.0" layoutY="63.0" mnemonicParsing="false" styleClass="button2" text="Consulta un medic" />
+                  <Label fx:id="labelEligibility" layoutX="31.0" layoutY="67.0" styleClass="label-info" text="Nu ti-ai verificat eligiblitatea! Vrei sa o faci?" />
+                  <Button fx:id="affirmativeEligibilityButton" layoutX="394.0" layoutY="60.0" mnemonicParsing="false" styleClass="button2" text="Da" />
+                  <Button fx:id="negativeEligibilityButton" layoutX="455.0" layoutY="60.0" mnemonicParsing="false" styleClass="button2" text="Nu" />
+                  <Button fx:id="checkDoctorButton" layoutX="519.0" layoutY="60.0" mnemonicParsing="false" styleClass="button2" text="Consulta un medic" />
+                  <Label layoutX="32.0" layoutY="115.0" text="Programarile tale" />
+                  <Label fx:id="labelAppointments" layoutX="33.0" layoutY="154.0" styleClass="label-info" text="Momentan nu ai nicio programare facuta!" />
+                  <VBox fx:id="vboxAppointments" layoutX="34.0" layoutY="198.0" prefHeight="307.0" prefWidth="816.0" spacing="15" style="-fx-padding: 10;"/>
                </children></AnchorPane>
         </content>
       </ScrollPane>

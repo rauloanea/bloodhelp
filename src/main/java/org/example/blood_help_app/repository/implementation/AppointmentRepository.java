@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -95,6 +97,25 @@ public class AppointmentRepository extends AbstractRepository<Long, Appointment>
                 return Optional.of(mapResultSetToEntity(rs));
             }
             return Optional.empty();
+        }catch (SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public List<Appointment> findFutureAppointmentsChronological(Donor user){
+        String sql = "Select * from appointments where donor_id = ? order by appointment_date";
+
+        try(var conn = this.jdbcUtils.getConnection();
+        var stmt = conn.prepareStatement(sql)){
+            stmt.setLong(1, user.getId());
+
+            var rs = stmt.executeQuery();
+            var list = new ArrayList<Appointment>();
+            while(rs.next()){
+                list.add(mapResultSetToEntity(rs));
+            }
+
+            return list;
         }catch (SQLException e){
             throw new RuntimeException(e.getMessage());
         }

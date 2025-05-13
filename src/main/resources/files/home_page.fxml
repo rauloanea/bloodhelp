@@ -8,17 +8,18 @@
    <center>
       <ScrollPane fitToHeight="false" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="690.0" prefWidth="885.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="760.0" prefWidth="885.0">
                <children>
                   <Label layoutX="368.0" layoutY="61.0" styleClass="label-blood" text="BloodHelp" />
                   <Label layoutX="327.0" layoutY="116.0" styleClass="label-info" text="Impreuna putem face o schimbare" />
                   <Button fx:id="donationCentersSecondButton" layoutX="275.0" layoutY="155.0" mnemonicParsing="false" styleClass="button2" text="Cauta centru donare" />
                   <Button fx:id="donationAppointmentSecondButton" layoutX="473.0" layoutY="155.0" mnemonicParsing="false" text="Programeaza donare" />
                   <Label layoutX="32.0" layoutY="254.0" text="Programarile tale" />
-                  <Label layoutX="32.0" layoutY="294.0" styleClass="label-info" text="Momentan nu ai nicio programare" />
-                  <HBox layoutY="321.0" prefHeight="140.0" prefWidth="883.0" />
-                  <Label layoutX="32.0" layoutY="469.0" text="Donatiile tale anterioare" />
-                  <Label layoutX="34.0" layoutY="503.0" styleClass="label-info" text="Nu ai facut nicio donatie! De ce nu programezi una?" />
+                  <Label fx:id="appointmentsLabel" layoutX="32.0" layoutY="294.0" styleClass="label-info" text="Momentan nu ai nicio programare" />
+                  <Label layoutX="32.0" layoutY="498.0" text="Donatiile tale anterioare" />
+                  <Label fx:id="labelDonations" layoutX="33.0" layoutY="533.0" styleClass="label-info" text="Nu ai facut nicio donatie! De ce nu programezi una?" />
+                  <HBox fx:id="hboxAppointments" layoutX="31.0" layoutY="330.0" prefHeight="166.0" prefWidth="822.0" spacing="10" style="-fx-padding: 10;" />
+                  <HBox fx:id="hboxPastDonations" layoutX="34.0" layoutY="565.0" prefHeight="166.0" prefWidth="822.0" spacing="10" style="-fx-padding: 10;" />
                </children></AnchorPane>
         </content>
       </ScrollPane>
