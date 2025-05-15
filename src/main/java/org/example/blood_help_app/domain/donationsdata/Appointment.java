@@ -9,20 +9,20 @@ import java.time.LocalDateTime;
 
 @jakarta.persistence.Entity
 @Table(name = "appointments")
-public class Appointment extends Entity<Long> {
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "donor_id")
+public class Appointment extends Entity<Integer> {
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "donor_id", nullable = false)
     private Donor donor;
 
-    @Column(name = "appointment_date")
+    @Column(name = "appointment_date", nullable = false)
     private LocalDateTime date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "donation_center_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "donation_center_id", nullable = false)
     private DonationCenter donationCenter;
 
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(nullable = false)
     private AppointmentStatus status;
 
     public Appointment(Donor donor, LocalDateTime date, DonationCenter donationCenter, AppointmentStatus status) {

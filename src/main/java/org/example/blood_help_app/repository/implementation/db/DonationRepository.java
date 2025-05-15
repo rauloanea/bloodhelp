@@ -1,13 +1,15 @@
-package org.example.blood_help_app.repository.implementation;
+package org.example.blood_help_app.repository.implementation.db;
 
 import org.example.blood_help_app.domain.donationsdata.Donation;
 import org.example.blood_help_app.domain.donationsdata.DonationCenter;
 import org.example.blood_help_app.domain.enums.DonationStatusEnum;
-import org.example.blood_help_app.repository.interfaces.AbstractRepository;
 import org.example.blood_help_app.domain.users.Donor;
 import org.example.blood_help_app.domain.users.Doctor;
 import org.example.blood_help_app.domain.enums.BloodTypeEnum;
+import org.example.blood_help_app.repository.interfaces.IDoctorRepository;
+import org.example.blood_help_app.repository.interfaces.IDonationCenterRepository;
 import org.example.blood_help_app.repository.interfaces.IDonationRepository;
+import org.example.blood_help_app.repository.interfaces.IDonorRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,15 +19,15 @@ import java.util.List;
 import java.util.Properties;
 import java.time.LocalDateTime;
 
-public class DonationRepository extends AbstractRepository<Long, Donation> implements IDonationRepository {
-    private final DonorRepository donorRepository;
-    private final DoctorRepository doctorRepository;
-    private final DonationCenterRepository centerRepository;
+public class DonationRepository extends AbstractRepository<Integer, Donation> implements IDonationRepository {
+    private final IDonorRepository donorRepository;
+    private final IDoctorRepository doctorRepository;
+    private final IDonationCenterRepository centerRepository;
 
     public DonationRepository(Properties props,
-                              DonorRepository donorRepository,
-                              DoctorRepository doctorRepository,
-                              DonationCenterRepository centerRepository) {
+                              IDonorRepository donorRepository,
+                              IDoctorRepository doctorRepository,
+                              IDonationCenterRepository centerRepository) {
         super(props, "donations");
         this.donorRepository = donorRepository;
         this.doctorRepository = doctorRepository;
@@ -34,8 +36,8 @@ public class DonationRepository extends AbstractRepository<Long, Donation> imple
 
     @Override
     protected Donation mapResultSetToEntity(ResultSet rs) throws SQLException {
-        Donor donor = donorRepository.findOne(rs.getLong("donor_id")).orElseThrow();
-        Doctor doctor = doctorRepository.findOne(rs.getLong("doctor_id")).orElseThrow();
+        Donor donor = donorRepository.findOne(rs.getInt("donor_id")).orElseThrow();
+        Doctor doctor = doctorRepository.findOne(rs.getInt("doctor_id")).orElseThrow();
         DonationCenter center = centerRepository.findOne(rs.getInt("donation_center_id")).orElseThrow();
 
         Donation donation = new Donation(
@@ -48,7 +50,7 @@ public class DonationRepository extends AbstractRepository<Long, Donation> imple
                 rs.getString("test_results"),
                 doctor
         );
-        donation.setId(rs.getLong("id"));
+        donation.setId(rs.getInt("id"));
         return donation;
     }
 

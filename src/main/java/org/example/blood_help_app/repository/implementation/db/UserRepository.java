@@ -1,8 +1,7 @@
-package org.example.blood_help_app.repository.implementation;
+package org.example.blood_help_app.repository.implementation.db;
 
 import org.example.blood_help_app.domain.enums.UserTypeEnum;
 import org.example.blood_help_app.domain.users.User;
-import org.example.blood_help_app.repository.interfaces.AbstractRepository;
 import org.example.blood_help_app.repository.interfaces.IUserRepository;
 
 import java.sql.PreparedStatement;
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Properties;
 
-public class UserRepository extends AbstractRepository<Long, User> implements IUserRepository {
+public class UserRepository extends AbstractRepository<Integer, User> implements IUserRepository {
     public UserRepository(Properties props) {
         super(props, "users");
     }
@@ -28,7 +27,7 @@ public class UserRepository extends AbstractRepository<Long, User> implements IU
                 LocalDateTime.parse(rs.getString("birthday_date")),
                 UserTypeEnum.valueOf(rs.getString("user_type"))
         );
-        user.setId(rs.getLong("id"));
+        user.setId(rs.getInt("id"));
         return user;
     }
 

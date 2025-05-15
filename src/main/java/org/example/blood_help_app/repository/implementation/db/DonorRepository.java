@@ -1,10 +1,10 @@
-package org.example.blood_help_app.repository.implementation;
+package org.example.blood_help_app.repository.implementation.db;
 
 import org.example.blood_help_app.domain.enums.BloodTypeEnum;
 import org.example.blood_help_app.domain.users.Donor;
 import org.example.blood_help_app.domain.users.User;
-import org.example.blood_help_app.repository.interfaces.AbstractRepository;
 import org.example.blood_help_app.repository.interfaces.IDonorRepository;
+import org.example.blood_help_app.repository.interfaces.IUserRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,17 +13,17 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Properties;
 
-public class DonorRepository extends AbstractRepository<Long, Donor> implements IDonorRepository {
-    private final UserRepository userRepository;
+public class DonorRepository extends AbstractRepository<Integer, Donor> implements IDonorRepository {
+    private final IUserRepository userRepository;
 
-    public DonorRepository(Properties properties, UserRepository userRepository) {
+    public DonorRepository(Properties properties, IUserRepository userRepository) {
         super(properties, "donors");
         this.userRepository = userRepository;
     }
 
     @Override
     protected Donor mapResultSetToEntity(ResultSet rs) throws SQLException {
-        User user = userRepository.findOne(rs.getLong("user_id")).orElseThrow();
+        User user = userRepository.findOne(rs.getInt("id")).orElseThrow();
 
         Donor donor = new Donor(
                 user.getName(),
@@ -91,11 +91,11 @@ public class DonorRepository extends AbstractRepository<Long, Donor> implements 
 
     @Override
     protected String getSelectOneString(){
-        return "SELECT * FROM " + tableName + " WHERE user_id = ?";
+        return "SELECT * FROM " + tableName + " WHERE id = ?";
     }
 
     @Override
     protected String getUpdateIdentifier() {
-        return " WHERE user_id = ?";
+        return " WHERE id = ?";
     }
 }

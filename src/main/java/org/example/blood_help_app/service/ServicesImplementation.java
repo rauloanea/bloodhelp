@@ -1,22 +1,15 @@
 package org.example.blood_help_app.service;
 
 import org.example.blood_help_app.domain.donationsdata.Appointment;
-import org.example.blood_help_app.domain.donationsdata.BloodUnit;
 import org.example.blood_help_app.domain.donationsdata.Donation;
 import org.example.blood_help_app.domain.donationsdata.DonationCenter;
 import org.example.blood_help_app.domain.enums.AppointmentStatus;
-import org.example.blood_help_app.domain.users.Admin;
-import org.example.blood_help_app.domain.users.Doctor;
 import org.example.blood_help_app.domain.users.Donor;
 import org.example.blood_help_app.domain.users.User;
-import org.example.blood_help_app.repository.implementation.AppointmentRepository;
-import org.example.blood_help_app.repository.implementation.DonationRepository;
-import org.example.blood_help_app.repository.implementation.UserRepository;
 import org.example.blood_help_app.repository.interfaces.*;
 import org.example.blood_help_app.utils.PasswordEncryption;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ServicesImplementation {
@@ -97,7 +90,7 @@ public class ServicesImplementation {
             throw new RuntimeException("Exista deja o programare la centrul " + center.getName() + " la data si ora selectata!");
 
         var result = this.appointmentRepo.save(appointment);
-        if(result.isEmpty()){
+        if(result.isPresent()){
             throw new RuntimeException("Problema la salvarea programarii! Reincearca!");
         }
     }

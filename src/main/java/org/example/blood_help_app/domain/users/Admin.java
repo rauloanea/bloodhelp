@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Table(name="admins")
 public class Admin extends User implements AppUser{
     @Enumerated(EnumType.STRING)
-    @Column(name="access_level")
+    @Column(name = "access_level", nullable = false, columnDefinition = "TEXT DEFAULT 'STANDARD'")
     private AccessLevelEnum accessLevel;
 
     public Admin(String name, String email, String username, String password, String phoneNumber, LocalDateTime birthdayDate, AccessLevelEnum accessLevel) {

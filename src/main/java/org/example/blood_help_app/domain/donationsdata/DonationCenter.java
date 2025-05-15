@@ -8,10 +8,10 @@ import java.util.List;
 @jakarta.persistence.Entity
 @Table(name = "donation_centers")
 public class DonationCenter extends Entity<Integer> {
-    @Column
+    @Column(nullable = false)
     private String name;
 
-    @Column
+    @Column(nullable = false)
     private String address;
 
     @OneToMany(mappedBy = "donationCenter", cascade = CascadeType.ALL, orphanRemoval = true)

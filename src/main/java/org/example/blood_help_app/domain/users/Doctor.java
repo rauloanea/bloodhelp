@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @DiscriminatorValue("DOCTOR")
 public class Doctor extends User implements AppUser {
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(nullable = false, columnDefinition = "TEXT DEFAULT 'GENERAL'")
     private SpecializationEnum specialization;
 
     @Column

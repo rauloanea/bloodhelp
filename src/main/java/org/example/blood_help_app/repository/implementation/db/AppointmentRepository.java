@@ -1,29 +1,29 @@
-package org.example.blood_help_app.repository.implementation;
+package org.example.blood_help_app.repository.implementation.db;
 
 import org.example.blood_help_app.domain.donationsdata.Appointment;
 import org.example.blood_help_app.domain.donationsdata.DonationCenter;
 import org.example.blood_help_app.domain.enums.AppointmentStatus;
 import org.example.blood_help_app.domain.users.Donor;
-import org.example.blood_help_app.repository.interfaces.AbstractRepository;
 import org.example.blood_help_app.repository.interfaces.IAppointmentRepository;
+import org.example.blood_help_app.repository.interfaces.IDonationCenterRepository;
+import org.example.blood_help_app.repository.interfaces.IDonorRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
-public class AppointmentRepository extends AbstractRepository<Long, Appointment> implements IAppointmentRepository {
-    private final DonorRepository donorRepository;
-    private final DonationCenterRepository centerRepository;
+public class AppointmentRepository extends AbstractRepository<Integer, Appointment> implements IAppointmentRepository {
+    private final IDonorRepository donorRepository;
+    private final IDonationCenterRepository centerRepository;
 
     public AppointmentRepository(Properties props,
-                                 DonorRepository donorRepository,
-                                 DonationCenterRepository centerRepository) {
+                                 IDonorRepository donorRepository,
+                                 IDonationCenterRepository centerRepository) {
         super(props, "appointments");
         this.donorRepository = donorRepository;
         this.centerRepository = centerRepository;
@@ -31,7 +31,7 @@ public class AppointmentRepository extends AbstractRepository<Long, Appointment>
 
     @Override
     protected Appointment mapResultSetToEntity(ResultSet rs) throws SQLException {
-        Donor donor = donorRepository.findOne(rs.getLong("donor_id")).orElseThrow();
+        Donor donor = donorRepository.findOne(rs.getInt("donor_id")).orElseThrow();
         DonationCenter center = centerRepository.findOne(rs.getInt("donation_center_id")).orElseThrow();
 
         Appointment appointment = new Appointment(
@@ -40,7 +40,7 @@ public class AppointmentRepository extends AbstractRepository<Long, Appointment>
                 center,
                 AppointmentStatus.valueOf(rs.getString("status"))
         );
-        appointment.setId(rs.getLong("id"));
+        appointment.setId(rs.getInt("id"));
         return appointment;
     }
 

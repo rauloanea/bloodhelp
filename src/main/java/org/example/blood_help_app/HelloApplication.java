@@ -4,10 +4,10 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import org.example.blood_help_app.controllers.factory.ControllerFactory;
 import org.example.blood_help_app.controllers.factory.ControllerType;
-import org.example.blood_help_app.repository.implementation.*;
+import org.example.blood_help_app.repository.implementation.db.*;
+import org.example.blood_help_app.repository.implementation.hibernate.*;
 import org.example.blood_help_app.service.ServicesImplementation;
 
-import java.io.Console;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
@@ -35,14 +35,14 @@ public class HelloApplication extends Application {
     }
 
     private static ServicesImplementation getService(Properties props) {
-        var userRepo = new UserRepository(props);
+        var userRepo = new UserMappedRepository();
         var adminRepo = new AdminRepository(props, userRepo);
         var doctorRepo = new DoctorRepository(props, userRepo);
-        var donorRepo = new DonorRepository(props, userRepo);
-        var donationCenterRepo = new DonationCenterRepository(props);
-        var donationRepo = new DonationRepository(props, donorRepo, doctorRepo, donationCenterRepo);
+        var donorRepo = new DonorMappedRepository();
+        var donationCenterRepo = new DonationCenterMappedRepository();
+        var donationRepo = new DonationMappedRepository();
         var bloodUnitRepo = new BloodUnitRepository(props, donationRepo, donationCenterRepo);
-        var appointmentRepo = new AppointmentRepository(props, donorRepo, donationCenterRepo);
+        var appointmentRepo = new AppointmentMappedRepository();
 
         return new ServicesImplementation(userRepo, adminRepo, donorRepo, doctorRepo,
                 donationRepo, donationCenterRepo, bloodUnitRepo, appointmentRepo);

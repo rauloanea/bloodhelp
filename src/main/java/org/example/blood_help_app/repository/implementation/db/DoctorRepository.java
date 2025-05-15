@@ -1,27 +1,27 @@
-package org.example.blood_help_app.repository.implementation;
+package org.example.blood_help_app.repository.implementation.db;
 
 import org.example.blood_help_app.domain.enums.SpecializationEnum;
 import org.example.blood_help_app.domain.users.Doctor;
 import org.example.blood_help_app.domain.users.User;
-import org.example.blood_help_app.repository.interfaces.AbstractRepository;
 import org.example.blood_help_app.repository.interfaces.IDoctorRepository;
+import org.example.blood_help_app.repository.interfaces.IUserRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class DoctorRepository extends AbstractRepository<Long, Doctor> implements IDoctorRepository {
-    private final UserRepository userRepository;
+public class DoctorRepository extends AbstractRepository<Integer, Doctor> implements IDoctorRepository {
+    private final IUserRepository userRepository;
 
-    public DoctorRepository(Properties props, UserRepository userRepository) {
+    public DoctorRepository(Properties props, IUserRepository userRepository) {
         super(props, "doctors");
         this.userRepository = userRepository;
     }
 
     @Override
     protected Doctor mapResultSetToEntity(ResultSet rs) throws SQLException {
-        User user = userRepository.findOne(rs.getLong("user_id")).orElseThrow();
+        User user = userRepository.findOne(rs.getInt("user_id")).orElseThrow();
 
         Doctor doctor = new Doctor(
                 user.getName(),

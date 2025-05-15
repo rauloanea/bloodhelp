@@ -11,33 +11,33 @@ import java.time.LocalDateTime;
 
 @jakarta.persistence.Entity
 @Table(name = "donations")
-public class Donation extends Entity<Long> {
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "donor_id")
+public class Donation extends Entity<Integer> {
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "donor_id", nullable = false)
     private Donor donor;
 
-    @Column(name = "donation_date")
+    @Column(name = "donation_date", nullable = false)
     private LocalDateTime donationDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "blood_type")
+    @Column(name = "blood_type", nullable = false)
     private BloodTypeEnum bloodType;
 
-    @Column
+    @Column(nullable = false)
     private double quantity;
 
-    @Column(name = "donation_center_id")
+    @Column(name = "donation_center_id", nullable = false)
     private int donationCenterID;
 
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(nullable = false)
     private DonationStatusEnum status;
 
     @Column(name = "test_results")
     private String testResults;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "doctor_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "doctor_id", nullable = false)
     private Doctor doctor;
 
     public Donation() {}

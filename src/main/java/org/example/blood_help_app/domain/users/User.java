@@ -10,17 +10,17 @@ import java.time.LocalDateTime;
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
-public class User extends Entity<Long> {
-    @Column
+public class User extends Entity<Integer> {
+    @Column(nullable = false)
     protected String name;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     protected String email;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     protected String username;
 
-    @Column
+    @Column(nullable = false)
     protected String password;
 
     @Column(name = "phone_number")
@@ -30,7 +30,7 @@ public class User extends Entity<Long> {
     protected LocalDateTime birthdayDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "user_type", nullable = false, insertable = false, updatable = false)
+    @Column(name = "user_type", nullable = false, insertable = false, updatable = false, columnDefinition = "TEXT DEFAULT 'USER'")
     protected UserTypeEnum userType;
 
     public User(String name, String email, String username, String password, String phoneNumber, LocalDateTime birthdayDate, UserTypeEnum userType) {

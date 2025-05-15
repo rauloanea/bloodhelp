@@ -5,6 +5,6 @@ import org.example.blood_help_app.domain.users.Donor;
 
 import java.util.List;
 
-public interface IDonationRepository extends IRepository<Long, Donation> {
+public interface IDonationRepository extends IRepository<Integer, Donation> {
     List<Donation> findUserDonations(Donor user);
 }

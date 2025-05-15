@@ -9,23 +9,23 @@ import java.time.LocalDateTime;
 
 @jakarta.persistence.Entity
 @Table(name = "blood_units")
-public class BloodUnit extends Entity<Long> {
+public class BloodUnit extends Entity<Integer> {
     @Enumerated(EnumType.STRING)
-    @Column(name = "blood_type")
+    @Column(name = "blood_type", nullable = false)
     private BloodTypeEnum bloodType;
 
-    @Column(name = "expiration_date")
+    @Column(name = "expiration_date", nullable = false)
     private LocalDateTime expirationDate;
 
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(nullable = false)
     private BloodUnitStatusEnum status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "donation_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "donation_id", nullable = false)
     private Donation donation;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "donation_center_id", nullable = false)
     private DonationCenter donationCenter;
 

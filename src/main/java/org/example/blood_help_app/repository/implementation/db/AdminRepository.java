@@ -1,10 +1,10 @@
-package org.example.blood_help_app.repository.implementation;
+package org.example.blood_help_app.repository.implementation.db;
 
 import org.example.blood_help_app.domain.enums.AccessLevelEnum;
 import org.example.blood_help_app.domain.users.Admin;
 import org.example.blood_help_app.domain.users.User;
-import org.example.blood_help_app.repository.interfaces.AbstractRepository;
 import org.example.blood_help_app.repository.interfaces.IAdminRepository;
+import org.example.blood_help_app.repository.interfaces.IUserRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,17 +12,17 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.Properties;
 
-public class AdminRepository extends AbstractRepository<Long, Admin> implements IAdminRepository {
-    private final UserRepository userRepository;
+public class AdminRepository extends AbstractRepository<Integer, Admin> implements IAdminRepository {
+    private final IUserRepository userRepository;
 
-    public AdminRepository(Properties props, UserRepository userRepository) {
+    public AdminRepository(Properties props, IUserRepository userRepository) {
         super(props, "admins");
         this.userRepository = userRepository;
     }
 
     @Override
     protected Admin mapResultSetToEntity(ResultSet rs) throws SQLException {
-        User user = userRepository.findOne(rs.getLong("user_id")).orElseThrow();
+        User user = userRepository.findOne(rs.getInt("user_id")).orElseThrow();
 
         Admin admin = new Admin(
                 user.getName(),
