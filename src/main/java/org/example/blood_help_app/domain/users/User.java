@@ -1,17 +1,36 @@
 package org.example.blood_help_app.domain.users;
 
+import jakarta.persistence.*;
 import org.example.blood_help_app.domain.Entity;
 import org.example.blood_help_app.domain.enums.UserTypeEnum;
 
 import java.time.LocalDateTime;
 
+@jakarta.persistence.Entity
+@Table(name = "users")
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
 public class User extends Entity<Long> {
+    @Column
     protected String name;
+
+    @Column(unique = true)
     protected String email;
+
+    @Column(unique = true)
     protected String username;
+
+    @Column
     protected String password;
+
+    @Column(name = "phone_number")
     protected String phoneNumber;
+
+    @Column(name = "birthday_date")
     protected LocalDateTime birthdayDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_type", nullable = false, insertable = false, updatable = false)
     protected UserTypeEnum userType;
 
     public User(String name, String email, String username, String password, String phoneNumber, LocalDateTime birthdayDate, UserTypeEnum userType) {
@@ -23,6 +42,8 @@ public class User extends Entity<Long> {
         this.birthdayDate = birthdayDate;
         this.userType = userType;
     }
+
+    public User(){}
 
     public String getName() {
         return name;

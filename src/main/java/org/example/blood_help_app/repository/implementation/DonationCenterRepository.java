@@ -2,13 +2,14 @@ package org.example.blood_help_app.repository.implementation;
 
 import org.example.blood_help_app.domain.donationsdata.DonationCenter;
 import org.example.blood_help_app.repository.interfaces.AbstractRepository;
+import org.example.blood_help_app.repository.interfaces.IDonationCenterRepository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Properties;
 
-public class DonationCenterRepository extends AbstractRepository<Integer, DonationCenter> {
+public class DonationCenterRepository extends AbstractRepository<Integer, DonationCenter> implements IDonationCenterRepository {
     public DonationCenterRepository(Properties props) {
         super(props, "donation_centers");
     }

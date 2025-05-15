@@ -1,7 +1,7 @@
 module org.example.blood_help_app {
     requires javafx.controls;
     requires javafx.fxml;
-    requires java.sql;
+    requires jakarta.persistence;
 
 
     opens org.example.blood_help_app to javafx.fxml;

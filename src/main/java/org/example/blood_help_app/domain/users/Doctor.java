@@ -1,12 +1,21 @@
 package org.example.blood_help_app.domain.users;
 
+import jakarta.persistence.*;
+import org.example.blood_help_app.domain.donationsdata.Appointment;
 import org.example.blood_help_app.domain.enums.SpecializationEnum;
 import org.example.blood_help_app.domain.enums.UserTypeEnum;
 
 import java.time.LocalDateTime;
 
-public class Doctor extends User{
+@jakarta.persistence.Entity
+@Table(name = "doctors")
+@DiscriminatorValue("DOCTOR")
+public class Doctor extends User implements AppUser {
+    @Enumerated(EnumType.STRING)
+    @Column
     private SpecializationEnum specialization;
+
+    @Column
     private String institution;
 
     public Doctor(String name, String email, String username, String password, String phoneNumber, LocalDateTime birthdayDate, SpecializationEnum specialization, String institution) {
@@ -14,6 +23,8 @@ public class Doctor extends User{
         this.specialization = specialization;
         this.institution = institution;
     }
+
+    public Doctor() {}
 
     public SpecializationEnum getSpecialization() {
         return specialization;

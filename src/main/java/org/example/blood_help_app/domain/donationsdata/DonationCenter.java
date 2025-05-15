@@ -1,13 +1,23 @@
 package org.example.blood_help_app.domain.donationsdata;
 
+import jakarta.persistence.*;
 import org.example.blood_help_app.domain.Entity;
 
 import java.util.List;
 
+@jakarta.persistence.Entity
+@Table(name = "donation_centers")
 public class DonationCenter extends Entity<Integer> {
+    @Column
     private String name;
+
+    @Column
     private String address;
+
+    @OneToMany(mappedBy = "donationCenter", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BloodUnit> inventory;
+
+    @Column(name = "contact_info")
     private String contactInfo;
 
     public DonationCenter(String name, String address, List<BloodUnit> inventory, String contactInfo) {
@@ -16,6 +26,8 @@ public class DonationCenter extends Entity<Integer> {
         this.inventory = inventory;
         this.contactInfo = contactInfo;
     }
+
+    public DonationCenter() {}
 
     public String getName() {
         return name;

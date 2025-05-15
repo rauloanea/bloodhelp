@@ -4,6 +4,7 @@ import org.example.blood_help_app.domain.enums.BloodTypeEnum;
 import org.example.blood_help_app.domain.users.Donor;
 import org.example.blood_help_app.domain.users.User;
 import org.example.blood_help_app.repository.interfaces.AbstractRepository;
+import org.example.blood_help_app.repository.interfaces.IDonorRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +13,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Properties;
 
-public class DonorRepository extends AbstractRepository<Long, Donor> {
+public class DonorRepository extends AbstractRepository<Long, Donor> implements IDonorRepository {
     private final UserRepository userRepository;
 
     public DonorRepository(Properties properties, UserRepository userRepository) {

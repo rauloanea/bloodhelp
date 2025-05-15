@@ -3,6 +3,7 @@ package org.example.blood_help_app.repository.implementation;
 import org.example.blood_help_app.domain.enums.UserTypeEnum;
 import org.example.blood_help_app.domain.users.User;
 import org.example.blood_help_app.repository.interfaces.AbstractRepository;
+import org.example.blood_help_app.repository.interfaces.IUserRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Properties;
 
-public class UserRepository extends AbstractRepository<Long, User> {
+public class UserRepository extends AbstractRepository<Long, User> implements IUserRepository {
     public UserRepository(Properties props) {
         super(props, "users");
     }

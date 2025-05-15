@@ -6,6 +6,7 @@ import org.example.blood_help_app.domain.donationsdata.DonationCenter;
 import org.example.blood_help_app.domain.enums.BloodTypeEnum;
 import org.example.blood_help_app.domain.enums.BloodUnitStatusEnum;
 import org.example.blood_help_app.repository.interfaces.AbstractRepository;
+import org.example.blood_help_app.repository.interfaces.IBloodUnitRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +14,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Properties;
 
-public class BloodUnitRepository extends AbstractRepository<Long, BloodUnit> {
+public class BloodUnitRepository extends AbstractRepository<Long, BloodUnit> implements IBloodUnitRepository {
     private final DonationRepository donationRepository;
     private final DonationCenterRepository centerRepository;
 
@@ -34,7 +35,8 @@ public class BloodUnitRepository extends AbstractRepository<Long, BloodUnit> {
                 BloodTypeEnum.valueOf(rs.getString("blood_type")),
                 LocalDateTime.parse(rs.getString("expiration_date")),
                 BloodUnitStatusEnum.valueOf(rs.getString("status")),
-                donation
+                donation,
+                center
         );
         unit.setId(rs.getLong("id"));
         return unit;

@@ -5,6 +5,7 @@ import org.example.blood_help_app.domain.donationsdata.DonationCenter;
 import org.example.blood_help_app.domain.enums.AppointmentStatus;
 import org.example.blood_help_app.domain.users.Donor;
 import org.example.blood_help_app.repository.interfaces.AbstractRepository;
+import org.example.blood_help_app.repository.interfaces.IAppointmentRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
-public class AppointmentRepository extends AbstractRepository<Long, Appointment> {
+public class AppointmentRepository extends AbstractRepository<Long, Appointment> implements IAppointmentRepository {
     private final DonorRepository donorRepository;
     private final DonationCenterRepository centerRepository;
 

@@ -12,7 +12,7 @@ import org.example.blood_help_app.domain.users.User;
 import org.example.blood_help_app.repository.implementation.AppointmentRepository;
 import org.example.blood_help_app.repository.implementation.DonationRepository;
 import org.example.blood_help_app.repository.implementation.UserRepository;
-import org.example.blood_help_app.repository.interfaces.IRepository;
+import org.example.blood_help_app.repository.interfaces.*;
 import org.example.blood_help_app.utils.PasswordEncryption;
 
 import java.time.LocalDateTime;
@@ -20,24 +20,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServicesImplementation {
-    private final UserRepository userRepo;
-    private final IRepository<Long, Admin> adminRepo;
-    private final IRepository<Long, Donor> donorRepo;
-    private final IRepository<Long, Doctor> doctorRepo;
-    private final DonationRepository donationRepo;
-    private final IRepository<Integer, DonationCenter> donationCenterRepo;
-    private final IRepository<Long, BloodUnit> bloodUnitRepo;
-    private final AppointmentRepository appointmentRepo;
+    private final IUserRepository userRepo;
+    private final IAdminRepository adminRepo;
+    private final IDonorRepository donorRepo;
+    private final IDoctorRepository doctorRepo;
+    private final IDonationRepository donationRepo;
+    private final IDonationCenterRepository donationCenterRepo;
+    private final IBloodUnitRepository bloodUnitRepo;
+    private final IAppointmentRepository appointmentRepo;
 
     public ServicesImplementation(
-            UserRepository userRepo,
-            IRepository<Long, Admin> adminRepo,
-            IRepository<Long, Donor> donorRepo,
-            IRepository<Long, Doctor> doctorRepo,
-            DonationRepository donationRepo,
-            IRepository<Integer, DonationCenter> donationCenterRepo,
-            IRepository<Long, BloodUnit> bloodUnitRepo,
-            AppointmentRepository appointmentRepo
+            IUserRepository userRepo,
+            IAdminRepository adminRepo,
+            IDonorRepository donorRepo,
+            IDoctorRepository doctorRepo,
+            IDonationRepository donationRepo,
+            IDonationCenterRepository donationCenterRepo,
+            IBloodUnitRepository bloodUnitRepo,
+            IAppointmentRepository appointmentRepo
     ) {
         this.userRepo = userRepo;
         this.adminRepo = adminRepo;

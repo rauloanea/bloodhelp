@@ -1,17 +1,27 @@
 package org.example.blood_help_app.domain.users;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
 import org.example.blood_help_app.domain.enums.AccessLevelEnum;
 import org.example.blood_help_app.domain.enums.UserTypeEnum;
 
 import java.time.LocalDateTime;
 
-public class Admin extends User {
+@jakarta.persistence.Entity
+@Table(name="admins")
+public class Admin extends User implements AppUser{
+    @Enumerated(EnumType.STRING)
+    @Column(name="access_level")
     private AccessLevelEnum accessLevel;
 
     public Admin(String name, String email, String username, String password, String phoneNumber, LocalDateTime birthdayDate, AccessLevelEnum accessLevel) {
         super(name, email, username, password, phoneNumber, birthdayDate, UserTypeEnum.ADMIN);
         this.accessLevel = accessLevel;
     }
+
+    public Admin(){}
 
     public AccessLevelEnum getAccessLevel() {
         return accessLevel;

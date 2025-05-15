@@ -1,17 +1,30 @@
 package org.example.blood_help_app.domain.users;
 
+import jakarta.persistence.*;
 import org.example.blood_help_app.domain.donationsdata.Donation;
 import org.example.blood_help_app.domain.enums.BloodTypeEnum;
 import org.example.blood_help_app.domain.enums.UserTypeEnum;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Donor extends User {
+@jakarta.persistence.Entity
+@Table(name = "donors")
+@DiscriminatorValue("DONOR")
+public class Donor extends User implements AppUser{
+    @Enumerated(EnumType.STRING)
+    @Column(name = "blood_type")
     private BloodTypeEnum bloodType;
-    private List<Donation> donationHistory;
+
+    @OneToMany(mappedBy = "donor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Donation> donationHistory = new ArrayList<>();
+
+    @Column(name = "eligible")
     private Integer eligible;
-    private String contactInfo;
+
+    @Column(name = "contact_info")
+    private String contactInfo;;
 
     public Donor(String name, String email, String username, String password, String phoneNumber, LocalDateTime birthdayDate, BloodTypeEnum bloodType, List<Donation> donationHistory, Integer eligible, String contactInfo) {
         super(name, email, username, password, phoneNumber, birthdayDate, UserTypeEnum.DONOR);
@@ -29,6 +42,8 @@ public class Donor extends User {
         this.eligible = eligible;
         this.contactInfo = contactInfo;
     }
+
+    public Donor(){}
 
     public BloodTypeEnum getBloodType() {
         return bloodType;

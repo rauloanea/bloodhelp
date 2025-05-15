@@ -4,6 +4,7 @@ import org.example.blood_help_app.domain.enums.AccessLevelEnum;
 import org.example.blood_help_app.domain.users.Admin;
 import org.example.blood_help_app.domain.users.User;
 import org.example.blood_help_app.repository.interfaces.AbstractRepository;
+import org.example.blood_help_app.repository.interfaces.IAdminRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.Properties;
 
-public class AdminRepository extends AbstractRepository<Long, Admin> {
+public class AdminRepository extends AbstractRepository<Long, Admin> implements IAdminRepository {
     private final UserRepository userRepository;
 
     public AdminRepository(Properties props, UserRepository userRepository) {

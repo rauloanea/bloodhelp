@@ -7,6 +7,7 @@ import org.example.blood_help_app.repository.interfaces.AbstractRepository;
 import org.example.blood_help_app.domain.users.Donor;
 import org.example.blood_help_app.domain.users.Doctor;
 import org.example.blood_help_app.domain.enums.BloodTypeEnum;
+import org.example.blood_help_app.repository.interfaces.IDonationRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Properties;
 import java.time.LocalDateTime;
 
-public class DonationRepository extends AbstractRepository<Long, Donation> {
+public class DonationRepository extends AbstractRepository<Long, Donation> implements IDonationRepository {
     private final DonorRepository donorRepository;
     private final DoctorRepository doctorRepository;
     private final DonationCenterRepository centerRepository;

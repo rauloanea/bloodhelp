@@ -4,13 +4,14 @@ import org.example.blood_help_app.domain.enums.SpecializationEnum;
 import org.example.blood_help_app.domain.users.Doctor;
 import org.example.blood_help_app.domain.users.User;
 import org.example.blood_help_app.repository.interfaces.AbstractRepository;
+import org.example.blood_help_app.repository.interfaces.IDoctorRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class DoctorRepository extends AbstractRepository<Long, Doctor> {
+public class DoctorRepository extends AbstractRepository<Long, Doctor> implements IDoctorRepository {
     private final UserRepository userRepository;
 
     public DoctorRepository(Properties props, UserRepository userRepository) {
