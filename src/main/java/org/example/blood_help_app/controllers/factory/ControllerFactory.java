@@ -8,7 +8,8 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.example.blood_help_app.controllers.controller_implementation.*;
-import org.example.blood_help_app.domain.users.Donor;
+import org.example.blood_help_app.domain.users.utils.AppUser;
+import org.example.blood_help_app.domain.users.utils.LoggedUserContext;
 import org.example.blood_help_app.service.ServicesImplementation;
 
 public class ControllerFactory {
@@ -17,7 +18,7 @@ public class ControllerFactory {
 
     private ServicesImplementation services;
 
-    private Donor user;
+    private LoggedUserContext userContext;
 
     private ControllerFactory() {}
 
@@ -32,12 +33,12 @@ public class ControllerFactory {
         this.services = services;
     }
 
-    public void setUser(final Donor user) {
-        this.user = user;
+    public void setUser(AppUser user) {
+        this.userContext = new LoggedUserContext(user);
     }
 
-    public Donor getUser(){
-        return user;
+    public LoggedUserContext getUserContext() {
+        return userContext;
     }
 
     public void setFirstStage(final Stage firstStage) {

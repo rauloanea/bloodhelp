@@ -1,9 +1,9 @@
 package org.example.blood_help_app.domain.users;
 
 import jakarta.persistence.*;
-import org.example.blood_help_app.domain.donationsdata.Appointment;
 import org.example.blood_help_app.domain.enums.SpecializationEnum;
 import org.example.blood_help_app.domain.enums.UserTypeEnum;
+import org.example.blood_help_app.domain.users.utils.AppUser;
 
 import java.time.LocalDateTime;
 

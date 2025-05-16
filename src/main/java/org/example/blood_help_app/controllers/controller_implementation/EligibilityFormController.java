@@ -28,7 +28,9 @@ public class EligibilityFormController extends Controller{
     @FXML
     private void initialize(){
         this.textfieldAge.setText(
-                String.valueOf(LocalDateTime.now().getYear() - ControllerFactory.getInstance().getUser().getBirthdayDate().getYear())
+                String.valueOf(LocalDateTime.now().getYear() - ControllerFactory.getInstance()
+                        .getUserContext().asDonor().get()
+                        .getBirthdayDate().getYear())
         );
         this.textfieldAge.setDisable(true);
 
@@ -99,7 +101,7 @@ public class EligibilityFormController extends Controller{
         var otherInfo = otherInfoTextArea.getText();
 
         try {
-            this.services.checkEligibility(ControllerFactory.getInstance().getUser(),
+            this.services.checkEligibility(ControllerFactory.getInstance().getUserContext().asDonor().get(),
                     age, gender, weight, lastDonation, otherInfo);
 
             ControllerFactory.getInstance().showMessage(
@@ -109,7 +111,7 @@ public class EligibilityFormController extends Controller{
                     "Formularul a fost trimis cu succes! Un medic iti va vizualiza raspunsurile in cel mai scurt timp"
             );
 
-            this.services.setDonorEligibility(ControllerFactory.getInstance().getUser(), 2);
+            this.services.setDonorEligibility(ControllerFactory.getInstance().getUserContext().asDonor().get(), 2);
 
             ControllerFactory.getInstance().runPage(ControllerType.DONOR_PROFILE_PAGE, sendFormButton);
         } catch (Exception e) {

@@ -64,7 +64,7 @@ public class AppointmentPageController extends Controller{
 
         try{
             this.services.makeAppointment(
-                    ControllerFactory.getInstance().getUser(),
+                    ControllerFactory.getInstance().getUserContext().asDonor().get(),
                     center,
                     appointmentDateTime
             );

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.example.blood_help_app.domain.donationsdata.Donation;
 import org.example.blood_help_app.domain.enums.BloodTypeEnum;
 import org.example.blood_help_app.domain.enums.UserTypeEnum;
+import org.example.blood_help_app.domain.users.utils.AppUser;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
 @jakarta.persistence.Entity
 @Table(name = "donors")
 @DiscriminatorValue("DONOR")
-public class Donor extends User implements AppUser{
+public class Donor extends User implements AppUser {
     @Enumerated(EnumType.STRING)
     @Column(name = "blood_type")
     private BloodTypeEnum bloodType;

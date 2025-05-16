@@ -4,13 +4,16 @@ import org.example.blood_help_app.domain.donationsdata.Appointment;
 import org.example.blood_help_app.domain.donationsdata.Donation;
 import org.example.blood_help_app.domain.donationsdata.DonationCenter;
 import org.example.blood_help_app.domain.enums.AppointmentStatus;
-import org.example.blood_help_app.domain.users.Donor;
-import org.example.blood_help_app.domain.users.User;
+import org.example.blood_help_app.domain.enums.UserTypeEnum;
+import org.example.blood_help_app.domain.users.*;
+import org.example.blood_help_app.domain.users.utils.AppUser;
 import org.example.blood_help_app.repository.interfaces.*;
 import org.example.blood_help_app.utils.PasswordEncryption;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static org.example.blood_help_app.domain.enums.UserTypeEnum.ADMIN;
 
 public class ServicesImplementation {
     private final IUserRepository userRepo;
@@ -57,16 +60,30 @@ public class ServicesImplementation {
         return donor.get();
     }
 
-    public Donor authenticateAccount(String email, String password){
+    public AppUser authenticateAccount(String email, String password) {
         var result = this.userRepo.findByCredentials(email, PasswordEncryption.encryptPassword(password));
-        if(result.isEmpty())
+        if (result.isEmpty())
             throw new RuntimeException("Email sau parola incorecte!");
 
-        var donor = this.donorRepo.findOne(result.get().getId());
-        if(donor.isEmpty())
-            throw new RuntimeException("Email sau parola incorecte!");
-        return donor.get();
+        User user = result.get();
+
+        switch (user.getUserType()) {
+            case DONOR -> {
+                var donor = this.donorRepo.findOne(user.getId());
+                return donor.orElseThrow(() -> new RuntimeException("Eroare la preluarea informatiilor despre donator!"));
+            }
+            case DOCTOR -> {
+                var doctor = this.doctorRepo.findOne(user.getId());
+                return doctor.orElseThrow(() -> new RuntimeException("Eroare la preluarea informatiilor despre doctor!"));
+            }
+            case ADMIN -> {
+                var admin = this.adminRepo.findOne(user.getId());
+                return admin.orElseThrow(() -> new RuntimeException("Eroare la preluarea informatiilor despre admin!"));
+            }
+            default -> throw new RuntimeException("Tip de utilizator necunoscut!");
+        }
     }
+
 
     public void setDonorEligibility(Donor user, Integer value){
         user.setEligibility(value);

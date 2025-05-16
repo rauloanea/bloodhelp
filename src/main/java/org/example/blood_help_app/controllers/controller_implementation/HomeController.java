@@ -20,6 +20,7 @@ import org.example.blood_help_app.domain.donationsdata.Donation;
 import org.example.blood_help_app.domain.donationsdata.DonationCenter;
 import org.example.blood_help_app.domain.enums.AppointmentStatus;
 import org.example.blood_help_app.domain.enums.DonationStatusEnum;
+import org.example.blood_help_app.domain.users.Donor;
 
 public class HomeController extends Controller {
     // Butoane
@@ -65,7 +66,11 @@ public class HomeController extends Controller {
     }
 
     private void handleAppointmentAction() {
-        int eligibility = ControllerFactory.getInstance().getUser().getEligibility();
+        Donor donor = ControllerFactory.getInstance().getUserContext()
+                .asDonor()
+                .orElseThrow(() -> new RuntimeException("Donatorul nu este prezent!"));
+
+        int eligibility = donor.getEligibility();
         String title, message;
 
         switch (eligibility) {
@@ -97,7 +102,10 @@ public class HomeController extends Controller {
     }
 
     private void loadAppointments() {
-        List<Appointment> appointments = services.findAppointments(ControllerFactory.getInstance().getUser());
+        Donor donor = ControllerFactory.getInstance().getUserContext()
+                .asDonor()
+                .orElseThrow(() -> new RuntimeException("Donatorul nu este prezent!"));
+        List<Appointment> appointments = services.findAppointments(donor);
 
         if (appointments.isEmpty()) {
             showNoAppointments();
@@ -127,7 +135,10 @@ public class HomeController extends Controller {
     }
 
     private void loadDonations() {
-        List<Donation> donations = services.findDonations(ControllerFactory.getInstance().getUser());
+        var donor = ControllerFactory.getInstance().getUserContext()
+                .asDonor()
+                .orElseThrow(() -> new RuntimeException("Donatorul nu este prezent!"));
+        List<Donation> donations = services.findDonations(donor);
 
         if (donations.isEmpty()) {
             showNoDonations();

@@ -4,6 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.example.blood_help_app.controllers.factory.ControllerFactory;
 import org.example.blood_help_app.controllers.factory.ControllerType;
+import org.example.blood_help_app.domain.users.Admin;
+import org.example.blood_help_app.domain.users.utils.AppUser;
+import org.example.blood_help_app.domain.users.Doctor;
+import org.example.blood_help_app.domain.users.Donor;
 
 public class LoginController extends Controller{
     @FXML
@@ -37,7 +41,7 @@ public class LoginController extends Controller{
     }
 
     private void handleLogin() {
-        try{
+        try {
             var email = emailField.textProperty().get();
             var password = passwordField.textProperty().get();
 
@@ -46,18 +50,35 @@ public class LoginController extends Controller{
                         "Atentie!",
                         "Credentiale invalide!",
                         "Fii sigur ca ai introdus un email si o parola pentru a te conecta!");
-
                 return;
             }
 
-            var user = this.services.authenticateAccount(email, password);
-            ControllerFactory.getInstance().setUser(user);
-            ControllerFactory.getInstance().runPage(ControllerType.DONOR_HOME, loginButton);
-        }catch (Exception e){
-            System.err.println(e.getMessage());
+            AppUser user = services.authenticateAccount(email, password);
 
+            ControllerFactory.getInstance().setUser(user);
+
+            switch (user) {
+                case Donor donor -> {
+                    ControllerFactory.getInstance().setUser(donor);
+                    ControllerFactory.getInstance().runPage(ControllerType.DONOR_HOME, loginButton);
+                }
+                case Doctor doctor -> {
+                    ControllerFactory.getInstance().setUser(doctor);
+                    ControllerFactory.getInstance().runPage(ControllerType.DOCTOR_HOME, loginButton);
+                }
+                case Admin admin -> {
+                    ControllerFactory.getInstance().setUser(admin);
+                    ControllerFactory.getInstance().runPage(ControllerType.ADMIN_HOME, loginButton);
+                }
+                case null, default -> throw new RuntimeException("Tip de utilizator necunoscut!");
+            }
+
+
+        } catch (Exception e){
+            System.err.println(e.getMessage());
             labelErrorEmail.setText(e.getMessage());
             labelErrorPassword.setText(e.getMessage());
         }
     }
+
 }

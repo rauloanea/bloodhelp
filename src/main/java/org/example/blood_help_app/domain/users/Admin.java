@@ -6,12 +6,13 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import org.example.blood_help_app.domain.enums.AccessLevelEnum;
 import org.example.blood_help_app.domain.enums.UserTypeEnum;
+import org.example.blood_help_app.domain.users.utils.AppUser;
 
 import java.time.LocalDateTime;
 
 @jakarta.persistence.Entity
 @Table(name="admins")
-public class Admin extends User implements AppUser{
+public class Admin extends User implements AppUser {
     @Enumerated(EnumType.STRING)
     @Column(name = "access_level", nullable = false, columnDefinition = "TEXT DEFAULT 'STANDARD'")
     private AccessLevelEnum accessLevel;

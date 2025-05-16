@@ -34,7 +34,7 @@ public class ProfileController extends Controller {
 
     @FXML
     private void initialize(){
-        this.labelName.setText("Salut, " + ControllerFactory.getInstance().getUser().getName());
+        this.labelName.setText("Salut, " + ControllerFactory.getInstance().getUserContext().asDonor().get().getName());
 
         this.homeButton.setOnAction(_ -> {
             ControllerFactory.getInstance().runPage(ControllerType.DONOR_HOME, homeButton);
@@ -52,7 +52,10 @@ public class ProfileController extends Controller {
                     "Programarea a fost facuta cu succes! Vei primi informatiile privind programarea facuta pe mail!"
             );
 
-            this.services.setDonorEligibility(ControllerFactory.getInstance().getUser(), 2);
+            this.services.setDonorEligibility(ControllerFactory.getInstance()
+                    .getUserContext()
+                    .asDonor()
+                    .get(), 2);
 
             this.labelEligibility.setText("Vei fi anuntat de catre medic daca esti eligibil sau nu");
             setVisibilityForEligibilityButtons(false);
@@ -64,7 +67,7 @@ public class ProfileController extends Controller {
     }
 
     private void checkEligibility() {
-        Integer eligibility = ControllerFactory.getInstance().getUser().getEligibility();
+        Integer eligibility = ControllerFactory.getInstance().getUserContext().asDonor().get().getEligibility();
         switch (eligibility){
             case -1:
                 this.labelEligibility.setText("Nu ti-ai verificat eligiblitatea! Vrei sa o faci?");
@@ -107,7 +110,7 @@ public class ProfileController extends Controller {
     }
 
     private void setAppointmentsInfo(){
-        var appointments = this.services.findAppointments(ControllerFactory.getInstance().getUser());
+        var appointments = this.services.findAppointments(ControllerFactory.getInstance().getUserContext().asDonor().get());
 
         if(appointments.isEmpty()){
             labelAppointments.setText("Momentan nu ai nicio programare facuta!");
