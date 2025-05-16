@@ -61,6 +61,7 @@ public class ControllerFactory {
             case DONOR_PROFILE_PAGE -> runDonorProfilePage();
             case ELIGIBILITY_FORM -> runEligibilityFormPage();
             case MAKE_APPOINTMENT_FORM -> runAppointmentFormPage();
+            case DONATION_HISTORY -> runDonationHistoryPage();
         }
 
         if(buttonTrigger != null){
@@ -165,6 +166,16 @@ public class ControllerFactory {
 
         this.runGenericPage(loader);
     }
+
+    private void runDonationHistoryPage(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/donation_history_page.fxml"));
+        DonationHistoryController controller = new DonationHistoryController();
+        controller.setServices(services);
+        loader.setController(controller);
+
+        this.runGenericPage(loader);
+    }
+
 
     public void showMessage(Alert.AlertType alertType, String title, String headerText, String contentText) {
         Alert alert = new Alert(alertType);

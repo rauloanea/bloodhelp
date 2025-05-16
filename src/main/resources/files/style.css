@@ -155,7 +155,7 @@
 }
 
 .donation-card {
-    -fx-background-color: #A4D3B4FF; /* Verde deschis pentru donații */
+    -fx-background-color: #A4D3B4FF;
 }
 
 .appointment-card:hover, .donation-card:hover {
@@ -166,6 +166,22 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 3, 0, 0, 1);
 }
 
+
+.buttonDetails {
+    -fx-background-color: #4FC3F7;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-padding: 5 10;
+}
+
+.buttonDetails:hover {
+    -fx-background-color: #29B6F6;
+}
+
+.buttonDetails:pressed {
+    -fx-background-color: #0288D1;
+}
 
 
 

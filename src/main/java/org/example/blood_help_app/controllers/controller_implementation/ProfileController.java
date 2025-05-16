@@ -125,7 +125,7 @@ public class ProfileController extends Controller {
 
         vboxAppointments.setVisible(true);
         vboxAppointments.setManaged(true);
-        vboxAppointments.getChildren().clear(); // Șterge cardurile existente
+        vboxAppointments.getChildren().clear();
 
         // Adaugă fiecare programare ca card
         appointments.forEach(appointment -> {

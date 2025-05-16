@@ -56,7 +56,7 @@ public class HomeController extends Controller {
 
         donationAppointmentButton.setOnAction(_ -> handleAppointmentAction());
         donationAppointmentSecondButton.setOnAction(_ -> handleAppointmentAction());
-//        donationHistoryButton.setOnAction(_ -> navigateTo(ControllerType.DONATION_HISTORY, donationHistoryButton));
+        donationHistoryButton.setOnAction(_ -> navigateTo(ControllerType.DONATION_HISTORY, donationHistoryButton));
 //        donationCentersButton.setOnAction(_ -> navigateTo(ControllerType.DONATION_CENTERS, donationCentersButton));
 //        donationCentersSecondButton.setOnAction(_ -> navigateTo(ControllerType.DONATION_CENTERS, donationCentersSecondButton));
     }
