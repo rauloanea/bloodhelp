@@ -1,4 +1,4 @@
-package org.example.blood_help_app.controllers.controller_implementation.generic;
+package org.example.blood_help_app.controllers.controller_implementation.general;
 
 import org.example.blood_help_app.service.ServicesImplementation;
 

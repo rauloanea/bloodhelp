@@ -3,7 +3,7 @@ package org.example.blood_help_app.controllers.controller_implementation.donor_p
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.converter.DoubleStringConverter;
-import org.example.blood_help_app.controllers.controller_implementation.generic.Controller;
+import org.example.blood_help_app.controllers.controller_implementation.general.Controller;
 import org.example.blood_help_app.controllers.factory.ControllerFactory;
 import org.example.blood_help_app.controllers.factory.ControllerType;
 
