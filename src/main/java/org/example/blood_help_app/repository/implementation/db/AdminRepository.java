@@ -22,7 +22,7 @@ public class AdminRepository extends AbstractRepository<Integer, Admin> implemen
 
     @Override
     protected Admin mapResultSetToEntity(ResultSet rs) throws SQLException {
-        User user = userRepository.findOne(rs.getInt("user_id")).orElseThrow();
+        User user = userRepository.find(rs.getInt("user_id")).orElseThrow();
 
         Admin admin = new Admin(
                 user.getName(),

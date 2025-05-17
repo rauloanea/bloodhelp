@@ -85,7 +85,7 @@ public class UserMappedRepository implements IUserRepository {
     }
 
     @Override
-    public Optional<User> findOne(Integer id) {
+    public Optional<User> find(Integer id) {
         if (id == null) {
             throw new IllegalArgumentException("ID cannot be null");
         }

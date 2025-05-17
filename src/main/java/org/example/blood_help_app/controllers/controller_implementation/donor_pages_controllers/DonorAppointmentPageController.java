@@ -1,4 +1,4 @@
-package org.example.blood_help_app.controllers.controller_implementation;
+package org.example.blood_help_app.controllers.controller_implementation.donor_pages_controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.util.StringConverter;
+import org.example.blood_help_app.controllers.controller_implementation.generic.Controller;
 import org.example.blood_help_app.controllers.factory.ControllerFactory;
 import org.example.blood_help_app.controllers.factory.ControllerType;
 import org.example.blood_help_app.domain.donationsdata.DonationCenter;
@@ -14,7 +15,7 @@ import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class AppointmentPageController extends Controller{
+public class DonorAppointmentPageController extends Controller {
     @FXML
     private Button sendFormButton;
     @FXML
@@ -64,7 +65,7 @@ public class AppointmentPageController extends Controller{
 
         try{
             this.services.makeAppointment(
-                    ControllerFactory.getInstance().getUserContext().asDonor().get(),
+                    ControllerFactory.getInstance().getLoggedUser().asDonor().get(),
                     center,
                     appointmentDateTime
             );

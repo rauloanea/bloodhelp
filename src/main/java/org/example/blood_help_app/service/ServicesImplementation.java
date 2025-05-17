@@ -4,7 +4,6 @@ import org.example.blood_help_app.domain.donationsdata.Appointment;
 import org.example.blood_help_app.domain.donationsdata.Donation;
 import org.example.blood_help_app.domain.donationsdata.DonationCenter;
 import org.example.blood_help_app.domain.enums.AppointmentStatus;
-import org.example.blood_help_app.domain.enums.UserTypeEnum;
 import org.example.blood_help_app.domain.users.*;
 import org.example.blood_help_app.domain.users.utils.AppUser;
 import org.example.blood_help_app.repository.interfaces.*;
@@ -12,8 +11,6 @@ import org.example.blood_help_app.utils.PasswordEncryption;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import static org.example.blood_help_app.domain.enums.UserTypeEnum.ADMIN;
 
 public class ServicesImplementation {
     private final IUserRepository userRepo;
@@ -69,15 +66,15 @@ public class ServicesImplementation {
 
         switch (user.getUserType()) {
             case DONOR -> {
-                var donor = this.donorRepo.findOne(user.getId());
+                var donor = this.donorRepo.find(user.getId());
                 return donor.orElseThrow(() -> new RuntimeException("Eroare la preluarea informatiilor despre donator!"));
             }
             case DOCTOR -> {
-                var doctor = this.doctorRepo.findOne(user.getId());
+                var doctor = this.doctorRepo.find(user.getId());
                 return doctor.orElseThrow(() -> new RuntimeException("Eroare la preluarea informatiilor despre doctor!"));
             }
             case ADMIN -> {
-                var admin = this.adminRepo.findOne(user.getId());
+                var admin = this.adminRepo.find(user.getId());
                 return admin.orElseThrow(() -> new RuntimeException("Eroare la preluarea informatiilor despre admin!"));
             }
             default -> throw new RuntimeException("Tip de utilizator necunoscut!");
@@ -112,7 +109,7 @@ public class ServicesImplementation {
         }
     }
 
-    public List<Appointment> findAppointments(Donor user){
+    public List<Appointment> findUserAppointments(Donor user){
         return this.appointmentRepo.findFutureAppointmentsChronological(user);
     }
 
@@ -124,12 +121,12 @@ public class ServicesImplementation {
         }
     }
 
-    public List<Donation> findDonations(Donor user){
+    public List<Donation> findUserDonations(Donor user){
         return this.donationRepo.findUserDonations(user);
     }
 
     public DonationCenter getDonationCenterByID(Integer id){
-        var result = this.donationCenterRepo.findOne(id);
+        var result = this.donationCenterRepo.find(id);
         return result.orElse(null);
     }
 }

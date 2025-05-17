@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IAppointmentRepository extends IRepository<Integer, Appointment> {
-    Optional<Appointment> checkDisponibility(Integer center, LocalDateTime date);
+    Optional<Appointment> checkDisponibility(Integer centerId, LocalDateTime date);
 
     List<Appointment> findFutureAppointmentsChronological(Donor user);
 }

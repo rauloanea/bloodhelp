@@ -83,7 +83,7 @@ public class AppointmentMappedRepository implements IAppointmentRepository {
     }
 
     @Override
-    public Optional<Appointment> findOne(Integer id) {
+    public Optional<Appointment> find(Integer id) {
         if (id == null) {
             throw new IllegalArgumentException("ID cannot be null");
         }

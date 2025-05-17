@@ -1,4 +1,4 @@
-package org.example.blood_help_app.controllers.controller_implementation;
+package org.example.blood_help_app.controllers.controller_implementation.generic;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -9,7 +9,7 @@ import org.example.blood_help_app.domain.users.utils.AppUser;
 import org.example.blood_help_app.domain.users.Doctor;
 import org.example.blood_help_app.domain.users.Donor;
 
-public class LoginController extends Controller{
+public class LoginController extends Controller {
     @FXML
     private Button newAccButton;
     @FXML

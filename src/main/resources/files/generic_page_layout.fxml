@@ -21,7 +21,7 @@
    <top>
       <HBox prefHeight="47.0" prefWidth="600.0" styleClass="hbox_bar" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Imagine">
+            <Button mnemonicParsing="false" styleClass="button2" text="Acasa">
                <HBox.margin>
                   <Insets left="6.0" top="2.0" />
                </HBox.margin></Button>

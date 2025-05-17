@@ -7,7 +7,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.example.blood_help_app.controllers.controller_implementation.*;
+import org.example.blood_help_app.controllers.controller_implementation.donor_pages_controllers.*;
+import org.example.blood_help_app.controllers.controller_implementation.generic.CreateAccountController;
+import org.example.blood_help_app.controllers.controller_implementation.generic.LoginController;
 import org.example.blood_help_app.domain.users.utils.AppUser;
 import org.example.blood_help_app.domain.users.utils.LoggedUserContext;
 import org.example.blood_help_app.service.ServicesImplementation;
@@ -18,7 +20,7 @@ public class ControllerFactory {
 
     private ServicesImplementation services;
 
-    private LoggedUserContext userContext;
+    private LoggedUserContext loggedUser;
 
     private ControllerFactory() {}
 
@@ -34,11 +36,11 @@ public class ControllerFactory {
     }
 
     public void setUser(AppUser user) {
-        this.userContext = new LoggedUserContext(user);
+        this.loggedUser = new LoggedUserContext(user);
     }
 
-    public LoggedUserContext getUserContext() {
-        return userContext;
+    public LoggedUserContext getLoggedUser() {
+        return loggedUser;
     }
 
     public void setFirstStage(final Stage firstStage) {
@@ -116,7 +118,7 @@ public class ControllerFactory {
     private void runDonorHomePage(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/home_page.fxml"));
 
-        HomeController controller = new HomeController();
+        DonorHomeController controller = new DonorHomeController();
 //        controller.setCurrentUser(this.currentUser);
         controller.setServices(services);
         loader.setController(controller);
@@ -139,7 +141,7 @@ public class ControllerFactory {
     private void runDonorProfilePage(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/profile_page.fxml"));
 
-        ProfileController controller = new ProfileController();
+        DonorProfileController controller = new DonorProfileController();
 //        controller.setCurrentUser(this.currentUser);
         controller.setServices(services);
         loader.setController(controller);
@@ -149,7 +151,7 @@ public class ControllerFactory {
 
     private void runEligibilityFormPage(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/eligibility_form.fxml"));
-        EligibilityFormController controller = new EligibilityFormController();
+        DonorEligibilityFormController controller = new DonorEligibilityFormController();
 //        controller.setCurrentUser(this.currentUser);
         controller.setServices(services);
         loader.setController(controller);
@@ -159,7 +161,7 @@ public class ControllerFactory {
 
     private void runAppointmentFormPage(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/make_donation_appointment.fxml"));
-        AppointmentPageController controller = new AppointmentPageController();
+        DonorAppointmentPageController controller = new DonorAppointmentPageController();
 //        controller.setCurrentUser(this.currentUser);
         controller.setServices(services);
         loader.setController(controller);
@@ -169,7 +171,7 @@ public class ControllerFactory {
 
     private void runDonationHistoryPage(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/donation_history_page.fxml"));
-        DonationHistoryController controller = new DonationHistoryController();
+        DonorDonationHistoryController controller = new DonorDonationHistoryController();
         controller.setServices(services);
         loader.setController(controller);
 

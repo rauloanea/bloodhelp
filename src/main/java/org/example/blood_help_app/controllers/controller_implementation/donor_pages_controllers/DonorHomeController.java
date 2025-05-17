@@ -1,4 +1,4 @@
-package org.example.blood_help_app.controllers.controller_implementation;
+package org.example.blood_help_app.controllers.controller_implementation.donor_pages_controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -8,6 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.example.blood_help_app.controllers.controller_implementation.generic.Controller;
 import org.example.blood_help_app.controllers.factory.ControllerFactory;
 import org.example.blood_help_app.controllers.factory.ControllerType;
 import org.example.blood_help_app.domain.donationsdata.Appointment;
@@ -22,7 +23,7 @@ import org.example.blood_help_app.domain.enums.AppointmentStatus;
 import org.example.blood_help_app.domain.enums.DonationStatusEnum;
 import org.example.blood_help_app.domain.users.Donor;
 
-public class HomeController extends Controller {
+public class DonorHomeController extends Controller {
     // Butoane
     @FXML private Button profileButton;
     @FXML private Button donationHistoryButton;
@@ -51,22 +52,18 @@ public class HomeController extends Controller {
     }
 
     private void setupButtonActions() {
-        profileButton.setOnAction(_ -> navigateTo(ControllerType.DONOR_PROFILE_PAGE, profileButton));
+        profileButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType.DONOR_PROFILE_PAGE, profileButton));
         buttonExit.setOnAction(_ -> ((Stage) buttonExit.getScene().getWindow()).close());
 
         donationAppointmentButton.setOnAction(_ -> handleAppointmentAction());
         donationAppointmentSecondButton.setOnAction(_ -> handleAppointmentAction());
-        donationHistoryButton.setOnAction(_ -> navigateTo(ControllerType.DONATION_HISTORY, donationHistoryButton));
-//        donationCentersButton.setOnAction(_ -> navigateTo(ControllerType.DONATION_CENTERS, donationCentersButton));
-//        donationCentersSecondButton.setOnAction(_ -> navigateTo(ControllerType.DONATION_CENTERS, donationCentersSecondButton));
-    }
-
-    private void navigateTo(ControllerType type, Button source) {
-        ControllerFactory.getInstance().runPage(type, source);
+        donationHistoryButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType.DONATION_HISTORY, donationHistoryButton));
+//        donationCentersButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType.DONATION_CENTERS, donationCentersButton));
+//        donationCentersSecondButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType.DONATION_CENTERS, donationCentersSecondButton));
     }
 
     private void handleAppointmentAction() {
-        Donor donor = ControllerFactory.getInstance().getUserContext()
+        Donor donor = ControllerFactory.getInstance().getLoggedUser()
                 .asDonor()
                 .orElseThrow(() -> new RuntimeException("Donatorul nu este prezent!"));
 
@@ -75,7 +72,7 @@ public class HomeController extends Controller {
 
         switch (eligibility) {
             case 1:
-                navigateTo(ControllerType.MAKE_APPOINTMENT_FORM, donationAppointmentButton);
+                ControllerFactory.getInstance().runPage(ControllerType.MAKE_APPOINTMENT_FORM, donationAppointmentButton);
                 return;
             case 2:
                 title = "Trebuie să aștepți!";
@@ -102,10 +99,10 @@ public class HomeController extends Controller {
     }
 
     private void loadAppointments() {
-        Donor donor = ControllerFactory.getInstance().getUserContext()
+        Donor donor = ControllerFactory.getInstance().getLoggedUser()
                 .asDonor()
                 .orElseThrow(() -> new RuntimeException("Donatorul nu este prezent!"));
-        List<Appointment> appointments = services.findAppointments(donor);
+        List<Appointment> appointments = services.findUserAppointments(donor);
 
         if (appointments.isEmpty()) {
             showNoAppointments();
@@ -131,14 +128,14 @@ public class HomeController extends Controller {
                 .forEach(hboxAppointments.getChildren()::add);
 
         hboxAppointments.setOnMouseClicked(_ ->
-                navigateTo(ControllerType.DONOR_PROFILE_PAGE, profileButton));
+                ControllerFactory.getInstance().runPage(ControllerType.DONOR_PROFILE_PAGE, profileButton));
     }
 
     private void loadDonations() {
-        var donor = ControllerFactory.getInstance().getUserContext()
+        var donor = ControllerFactory.getInstance().getLoggedUser()
                 .asDonor()
                 .orElseThrow(() -> new RuntimeException("Donatorul nu este prezent!"));
-        List<Donation> donations = services.findDonations(donor);
+        List<Donation> donations = services.findUserDonations(donor);
 
         if (donations.isEmpty()) {
             showNoDonations();

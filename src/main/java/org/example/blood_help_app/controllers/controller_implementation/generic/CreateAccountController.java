@@ -1,4 +1,4 @@
-package org.example.blood_help_app.controllers.controller_implementation;
+package org.example.blood_help_app.controllers.controller_implementation.generic;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

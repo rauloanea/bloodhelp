@@ -29,7 +29,7 @@ public class AdminMappedRepository implements IAdminRepository {
     }
 
     @Override
-    public Optional<Admin> findOne(Integer integer) {
+    public Optional<Admin> find(Integer integer) {
         return Optional.empty();
     }
 

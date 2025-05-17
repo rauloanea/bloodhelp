@@ -1,6 +1,6 @@
 package org.example.blood_help_app.repository.interfaces;
 
-import org.example.blood_help_app.domain.Entity;
+import org.example.blood_help_app.domain.generic.Entity;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,7 +49,7 @@ public interface IRepository<ID, E extends Entity<ID>> {
      * @throws IllegalArgumentException
      *                  if id is null.
      */
-    Optional<E> findOne(ID id);
+    Optional<E> find(ID id);
 
     /**
      * @return all entities

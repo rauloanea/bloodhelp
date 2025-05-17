@@ -1,7 +1,7 @@
 package org.example.blood_help_app.domain.donationsdata;
 
 import jakarta.persistence.*;
-import org.example.blood_help_app.domain.Entity;
+import org.example.blood_help_app.domain.generic.Entity;
 import org.example.blood_help_app.domain.enums.AppointmentStatus;
 import org.example.blood_help_app.domain.users.Donor;
 

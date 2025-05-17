@@ -82,7 +82,7 @@ public class DonationCenterMappedRepository implements IDonationCenterRepository
     }
 
     @Override
-    public Optional<DonationCenter> findOne(Integer id) {
+    public Optional<DonationCenter> find(Integer id) {
         if (id == null) {
             throw new IllegalArgumentException("ID cannot be null");
         }

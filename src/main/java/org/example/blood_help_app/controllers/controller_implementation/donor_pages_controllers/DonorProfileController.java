@@ -1,4 +1,4 @@
-package org.example.blood_help_app.controllers.controller_implementation;
+package org.example.blood_help_app.controllers.controller_implementation.donor_pages_controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import org.example.blood_help_app.controllers.controller_implementation.generic.Controller;
 import org.example.blood_help_app.controllers.factory.ControllerFactory;
 import org.example.blood_help_app.controllers.factory.ControllerType;
 import org.example.blood_help_app.domain.donationsdata.Appointment;
@@ -14,9 +15,15 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-public class ProfileController extends Controller {
+public class DonorProfileController extends Controller {
     @FXML
     private Button homeButton;
+    @FXML
+    private Button donationCentersButton;
+    @FXML
+    private Button donationAppointmentButton;
+    @FXML
+    private Button donationHistoryButton;
     @FXML
     private Label labelEligibility;
     @FXML
@@ -34,11 +41,14 @@ public class ProfileController extends Controller {
 
     @FXML
     private void initialize(){
-        this.labelName.setText("Salut, " + ControllerFactory.getInstance().getUserContext().asDonor().get().getName());
+        this.labelName.setText("Salut, " + ControllerFactory.getInstance().getLoggedUser().asDonor().get().getName());
 
         this.homeButton.setOnAction(_ -> {
             ControllerFactory.getInstance().runPage(ControllerType.DONOR_HOME, homeButton);
         });
+
+        this.donationHistoryButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType.DONATION_HISTORY, donationHistoryButton));
+        this.donationAppointmentButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType.MAKE_APPOINTMENT_FORM, donationAppointmentButton));
 
         this.negativeEligibilityButton.setOnAction(_ -> handleNegativeEligibiltyAnswer());
         this.affirmativeEligibilityButton.setOnAction(_ ->
@@ -53,7 +63,7 @@ public class ProfileController extends Controller {
             );
 
             this.services.setDonorEligibility(ControllerFactory.getInstance()
-                    .getUserContext()
+                    .getLoggedUser()
                     .asDonor()
                     .get(), 2);
 
@@ -67,7 +77,7 @@ public class ProfileController extends Controller {
     }
 
     private void checkEligibility() {
-        Integer eligibility = ControllerFactory.getInstance().getUserContext().asDonor().get().getEligibility();
+        Integer eligibility = ControllerFactory.getInstance().getLoggedUser().asDonor().get().getEligibility();
         switch (eligibility){
             case -1:
                 this.labelEligibility.setText("Nu ti-ai verificat eligiblitatea! Vrei sa o faci?");
@@ -110,7 +120,7 @@ public class ProfileController extends Controller {
     }
 
     private void setAppointmentsInfo(){
-        var appointments = this.services.findAppointments(ControllerFactory.getInstance().getUserContext().asDonor().get());
+        var appointments = this.services.findUserAppointments(ControllerFactory.getInstance().getLoggedUser().asDonor().get());
 
         if(appointments.isEmpty()){
             labelAppointments.setText("Momentan nu ai nicio programare facuta!");

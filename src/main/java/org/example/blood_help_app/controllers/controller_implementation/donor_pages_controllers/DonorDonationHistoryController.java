@@ -1,11 +1,13 @@
-package org.example.blood_help_app.controllers.controller_implementation;
+package org.example.blood_help_app.controllers.controller_implementation.donor_pages_controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import org.example.blood_help_app.controllers.controller_implementation.generic.Controller;
 import org.example.blood_help_app.controllers.factory.ControllerFactory;
+import org.example.blood_help_app.controllers.factory.ControllerType;
 import org.example.blood_help_app.domain.donationsdata.Donation;
 import org.example.blood_help_app.domain.donationsdata.DonationCenter;
 import org.example.blood_help_app.domain.enums.DonationStatusEnum;
@@ -14,7 +16,16 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class DonationHistoryController extends Controller {
+public class DonorDonationHistoryController extends Controller {
+    @FXML
+    private Button homeButton;
+    @FXML
+    private Button donationCentersButton;
+    @FXML
+    private Button donationAppointmentButton;
+    @FXML
+    private Button profileButton;
+
     @FXML
     private Label labelHistoryInfo;
     @FXML
@@ -25,12 +36,16 @@ public class DonationHistoryController extends Controller {
 
     @FXML
     private void initialize() {
+        this.homeButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType.DONOR_HOME, homeButton));
+//        this.donationCentersButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType))
+        donationAppointmentButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType.MAKE_APPOINTMENT_FORM, donationAppointmentButton));
+        profileButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType.DONOR_PROFILE_PAGE, profileButton));
         loadDonations();
     }
 
     private void loadDonations() {
-        List<Donation> donations = services.findDonations(
-                ControllerFactory.getInstance().getUserContext().asDonor().get()
+        List<Donation> donations = services.findUserDonations(
+                ControllerFactory.getInstance().getLoggedUser().asDonor().get()
         );
 
         if (donations.isEmpty()) {

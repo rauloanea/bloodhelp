@@ -21,7 +21,7 @@ public class DoctorRepository extends AbstractRepository<Integer, Doctor> implem
 
     @Override
     protected Doctor mapResultSetToEntity(ResultSet rs) throws SQLException {
-        User user = userRepository.findOne(rs.getInt("user_id")).orElseThrow();
+        User user = userRepository.find(rs.getInt("user_id")).orElseThrow();
 
         Doctor doctor = new Doctor(
                 user.getName(),

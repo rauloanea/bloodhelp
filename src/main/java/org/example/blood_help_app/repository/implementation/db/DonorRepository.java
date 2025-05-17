@@ -23,7 +23,7 @@ public class DonorRepository extends AbstractRepository<Integer, Donor> implemen
 
     @Override
     protected Donor mapResultSetToEntity(ResultSet rs) throws SQLException {
-        User user = userRepository.findOne(rs.getInt("id")).orElseThrow();
+        User user = userRepository.find(rs.getInt("id")).orElseThrow();
 
         Donor donor = new Donor(
                 user.getName(),

@@ -1,14 +1,15 @@
-package org.example.blood_help_app.controllers.controller_implementation;
+package org.example.blood_help_app.controllers.controller_implementation.donor_pages_controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.converter.DoubleStringConverter;
+import org.example.blood_help_app.controllers.controller_implementation.generic.Controller;
 import org.example.blood_help_app.controllers.factory.ControllerFactory;
 import org.example.blood_help_app.controllers.factory.ControllerType;
 
 import java.time.LocalDateTime;
 
-public class EligibilityFormController extends Controller{
+public class DonorEligibilityFormController extends Controller {
     @FXML
     private TextField textfieldAge;
     @FXML
@@ -29,7 +30,7 @@ public class EligibilityFormController extends Controller{
     private void initialize(){
         this.textfieldAge.setText(
                 String.valueOf(LocalDateTime.now().getYear() - ControllerFactory.getInstance()
-                        .getUserContext().asDonor().get()
+                        .getLoggedUser().asDonor().get()
                         .getBirthdayDate().getYear())
         );
         this.textfieldAge.setDisable(true);
@@ -101,7 +102,7 @@ public class EligibilityFormController extends Controller{
         var otherInfo = otherInfoTextArea.getText();
 
         try {
-            this.services.checkEligibility(ControllerFactory.getInstance().getUserContext().asDonor().get(),
+            this.services.checkEligibility(ControllerFactory.getInstance().getLoggedUser().asDonor().get(),
                     age, gender, weight, lastDonation, otherInfo);
 
             ControllerFactory.getInstance().showMessage(
@@ -111,7 +112,7 @@ public class EligibilityFormController extends Controller{
                     "Formularul a fost trimis cu succes! Un medic iti va vizualiza raspunsurile in cel mai scurt timp"
             );
 
-            this.services.setDonorEligibility(ControllerFactory.getInstance().getUserContext().asDonor().get(), 2);
+            this.services.setDonorEligibility(ControllerFactory.getInstance().getLoggedUser().asDonor().get(), 2);
 
             ControllerFactory.getInstance().runPage(ControllerType.DONOR_PROFILE_PAGE, sendFormButton);
         } catch (Exception e) {

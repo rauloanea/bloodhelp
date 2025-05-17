@@ -36,9 +36,9 @@ public class DonationRepository extends AbstractRepository<Integer, Donation> im
 
     @Override
     protected Donation mapResultSetToEntity(ResultSet rs) throws SQLException {
-        Donor donor = donorRepository.findOne(rs.getInt("donor_id")).orElseThrow();
-        Doctor doctor = doctorRepository.findOne(rs.getInt("doctor_id")).orElseThrow();
-        DonationCenter center = centerRepository.findOne(rs.getInt("donation_center_id")).orElseThrow();
+        Donor donor = donorRepository.find(rs.getInt("donor_id")).orElseThrow();
+        Doctor doctor = doctorRepository.find(rs.getInt("doctor_id")).orElseThrow();
+        DonationCenter center = centerRepository.find(rs.getInt("donation_center_id")).orElseThrow();
 
         Donation donation = new Donation(
                 donor,

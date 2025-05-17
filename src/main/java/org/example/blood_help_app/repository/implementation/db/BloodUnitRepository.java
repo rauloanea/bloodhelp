@@ -8,7 +8,6 @@ import org.example.blood_help_app.domain.enums.BloodUnitStatusEnum;
 import org.example.blood_help_app.repository.interfaces.IBloodUnitRepository;
 import org.example.blood_help_app.repository.interfaces.IDonationCenterRepository;
 import org.example.blood_help_app.repository.interfaces.IDonationRepository;
-import org.example.blood_help_app.repository.interfaces.IDonorRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,8 +29,8 @@ public class BloodUnitRepository extends AbstractRepository<Integer, BloodUnit> 
 
     @Override
     protected BloodUnit mapResultSetToEntity(ResultSet rs) throws SQLException {
-        Donation donation = donationRepository.findOne(rs.getInt("donation_id")).orElseThrow();
-        DonationCenter center = centerRepository.findOne(rs.getInt("donation_center_id")).orElseThrow();
+        Donation donation = donationRepository.find(rs.getInt("donation_id")).orElseThrow();
+        DonationCenter center = centerRepository.find(rs.getInt("donation_center_id")).orElseThrow();
 
         BloodUnit unit = new BloodUnit(
                 BloodTypeEnum.valueOf(rs.getString("blood_type")),

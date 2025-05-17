@@ -1,7 +1,7 @@
 package org.example.blood_help_app.domain.donationsdata;
 
 import jakarta.persistence.*;
-import org.example.blood_help_app.domain.Entity;
+import org.example.blood_help_app.domain.generic.Entity;
 
 import java.util.List;
 

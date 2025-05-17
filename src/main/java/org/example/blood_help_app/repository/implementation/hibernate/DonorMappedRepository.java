@@ -85,7 +85,7 @@ public class DonorMappedRepository implements IDonorRepository {
     }
 
     @Override
-    public Optional<Donor> findOne(Integer id) {
+    public Optional<Donor> find(Integer id) {
         if (id == null) {
             throw new IllegalArgumentException("ID cannot be null");
         }

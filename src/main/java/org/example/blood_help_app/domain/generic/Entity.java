@@ -1,4 +1,4 @@
-package org.example.blood_help_app.domain;
+package org.example.blood_help_app.domain.generic;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

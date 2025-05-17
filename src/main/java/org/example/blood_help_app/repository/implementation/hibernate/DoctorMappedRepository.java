@@ -24,7 +24,7 @@ public class DoctorMappedRepository implements IDoctorRepository {
     }
 
     @Override
-    public Optional<Doctor> findOne(Integer integer) {
+    public Optional<Doctor> find(Integer integer) {
         return Optional.empty();
     }
 

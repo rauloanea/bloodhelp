@@ -1,6 +1,6 @@
 package org.example.blood_help_app.repository.implementation.db;
 
-import org.example.blood_help_app.domain.Entity;
+import org.example.blood_help_app.domain.generic.Entity;
 import org.example.blood_help_app.repository.interfaces.IRepository;
 import org.example.blood_help_app.utils.JDBCUtils;
 
@@ -65,7 +65,7 @@ public abstract class AbstractRepository<ID, E extends Entity<ID>> implements IR
             throw new IllegalArgumentException("ID cannot be null");
         }
 
-        Optional<E> entity = findOne(id);
+        Optional<E> entity = find(id);
         if (entity.isEmpty()) {
             return Optional.empty();
         }
@@ -88,7 +88,7 @@ public abstract class AbstractRepository<ID, E extends Entity<ID>> implements IR
             throw new IllegalArgumentException("Entity cannot be null");
         }
 
-        if (findOne(updatedEntity.getId()).isEmpty()) {
+        if (find(updatedEntity.getId()).isEmpty()) {
             return Optional.of(updatedEntity);
         }
 
@@ -108,7 +108,7 @@ public abstract class AbstractRepository<ID, E extends Entity<ID>> implements IR
     protected abstract String getUpdateIdentifier();
 
     @Override
-    public Optional<E> findOne(ID id) {
+    public Optional<E> find(ID id) {
         if (id == null) {
             throw new IllegalArgumentException("ID cannot be null");
         }

@@ -31,8 +31,8 @@ public class AppointmentRepository extends AbstractRepository<Integer, Appointme
 
     @Override
     protected Appointment mapResultSetToEntity(ResultSet rs) throws SQLException {
-        Donor donor = donorRepository.findOne(rs.getInt("donor_id")).orElseThrow();
-        DonationCenter center = centerRepository.findOne(rs.getInt("donation_center_id")).orElseThrow();
+        Donor donor = donorRepository.find(rs.getInt("donor_id")).orElseThrow();
+        DonationCenter center = centerRepository.find(rs.getInt("donation_center_id")).orElseThrow();
 
         Appointment appointment = new Appointment(
                 donor,
@@ -85,12 +85,12 @@ public class AppointmentRepository extends AbstractRepository<Integer, Appointme
         return " WHERE id = ?";
     }
 
-    public Optional<Appointment> checkDisponibility(Integer center, LocalDateTime date){
+    public Optional<Appointment> checkDisponibility(Integer centerId, LocalDateTime date){
         String sql = "Select * from appointments where donation_center_id = ? and appointment_date = ?";
 
         try(var connection = jdbcUtils.getConnection();
         PreparedStatement stmt = connection.prepareStatement(sql)){
-            stmt.setInt(1, center);
+            stmt.setInt(1, centerId);
             stmt.setObject(2, date);
 
             var rs = stmt.executeQuery();
