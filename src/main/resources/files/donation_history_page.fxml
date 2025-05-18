@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <ScrollPane fitToHeight="false" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="590.0" prefWidth="885.0">
+               <children>
+                  <Label layoutX="35.0" layoutY="26.0" text="Istoricul donatiilor tale anterioare" />
+                  <Label fx:id="labelHistoryInfo" layoutX="35.0" layoutY="63.0" styleClass="label-info" text="Momentan nu ai nicio donatie facuta!" />
+                  <VBox fx:id="vboxDonations" layoutX="35.0" layoutY="109.0" prefHeight="537.0" prefWidth="815.0" />
+               </children></AnchorPane>
+        </content>
+      </ScrollPane>
+   </center>
+   <top>
+      <HBox prefHeight="47.0" prefWidth="600.0" styleClass="hbox_bar" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="homeButton" mnemonicParsing="false" styleClass="button2" text="Acasa">
+               <HBox.margin>
+                  <Insets left="6.0" top="2.0" />
+               </HBox.margin></Button>
+            <Button fx:id="donationCentersButton" mnemonicParsing="false" styleClass="button2" text="Centre Donare">
+               <HBox.margin>
+                  <Insets left="227.0" top="2.0" />
+               </HBox.margin></Button>
+            <Button fx:id="donationAppointmentButton" mnemonicParsing="false" styleClass="button2" text="Programare Donare">
+               <HBox.margin>
+                  <Insets top="2.0" />
+               </HBox.margin></Button>
+            <Button fx:id="donationHistoryButton" mnemonicParsing="false" styleClass="button2" text="Istoric Donari">
+               <HBox.margin>
+                  <Insets top="2.0" />
+               </HBox.margin></Button>
+            <Button fx:id="profileButton" mnemonicParsing="false" styleClass="button2" text="Gestioneaza Profil">
+               <HBox.margin>
+                  <Insets top="2.0" />
+               </HBox.margin></Button>
+         </children></HBox>
+   </top>
+</BorderPane>

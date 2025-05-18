@@ -43,7 +43,7 @@ public class ServicesImplementation {
         this.appointmentRepo = appointmentRepo;
     }
 
-    public Donor createDonorAccount(User user){
+    public void createDonorAccount(User user){
         user.setPassword(PasswordEncryption.encryptPassword(user.getPassword()));
         var result = this.userRepo.save(user);
         if(result.isEmpty())
@@ -55,7 +55,6 @@ public class ServicesImplementation {
         ));
         if(donor.isEmpty())
             throw new RuntimeException("Eroare la creearea noului donator!");
-        return donor.get();
     }
 
     public AppUser authenticateAccount(String email, String password) {
@@ -159,5 +158,26 @@ public class ServicesImplementation {
     public DonationCenter getDonationCenterByID(Integer id){
         var result = this.donationCenterRepo.find(id);
         return result.orElse(null);
+    }
+
+    public Donor updateUser(Donor user, String newUsername, String newPhoneNumber, String newPassword){
+        try{
+            if(newUsername != null && !newUsername.isEmpty())
+                user.setUsername(newUsername);
+
+            if(newPhoneNumber != null && !newPhoneNumber.isEmpty())
+                user.setContactInfo(newPhoneNumber);
+
+            if(newPassword != null && !newPassword.isEmpty())
+                user.setPassword(PasswordEncryption.encryptPassword(newPassword));
+
+            var result = this.userRepo.update(user);
+            if(result.isEmpty())
+                return user;
+        }catch (Exception e){
+            throw new RuntimeException("Eroare la salvarea modificarilor!");
+        }
+
+        throw new RuntimeException("Eroare la salvarea modificarilor!");
     }
 }

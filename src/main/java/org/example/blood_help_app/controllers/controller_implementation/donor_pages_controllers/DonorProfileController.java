@@ -1,15 +1,13 @@
 package org.example.blood_help_app.controllers.controller_implementation.donor_pages_controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import org.example.blood_help_app.controllers.controller_implementation.general.Controller;
 import org.example.blood_help_app.controllers.factory.ControllerFactory;
 import org.example.blood_help_app.controllers.factory.ControllerType;
 import org.example.blood_help_app.domain.donationsdata.Appointment;
+import org.example.blood_help_app.utils.PasswordEncryption;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -38,6 +36,18 @@ public class DonorProfileController extends Controller {
     private VBox vboxAppointments;
     @FXML
     private Label labelAppointments;
+    @FXML
+    private TextField newUsernameField;
+    @FXML
+    private TextField newPhoneNumberField;
+    @FXML
+    private PasswordField oldPasswordField;
+    @FXML
+    private PasswordField newPasswordField;
+    @FXML
+    private Button updateInfoButton;
+    @FXML
+    private Button resetNewInfoButton;
 
     @FXML
     private void initialize(){
@@ -74,6 +84,10 @@ public class DonorProfileController extends Controller {
         this.checkEligibility();
 
         this.setAppointmentsInfo();
+
+        this.resetNewInfoButton.setOnAction(_ -> this.resetFields());
+
+        this.updateInfoButton.setOnAction(_ -> this.handleUpdateUserInfo());
     }
 
     private void checkEligibility() {
@@ -178,7 +192,6 @@ public class DonorProfileController extends Controller {
     }
 
     private void handleCancelAppointment(Appointment appointment) {
-        // Confirmare înainte de anulare
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
         confirmation.setTitle("Confirmare anulare");
         confirmation.setHeaderText("Sigur dorești să anulezi programarea?");
@@ -196,6 +209,55 @@ public class DonorProfileController extends Controller {
             }catch (Exception e){
                 ControllerFactory.getInstance().showMessage(Alert.AlertType.ERROR, null, "Eroare", e.getMessage());
             }
+        }
+    }
+
+    private void resetFields(){
+        newUsernameField.setText("");
+        newPhoneNumberField.setText("");
+        oldPasswordField.setText("");
+        newPasswordField.setText("");
+    }
+
+    private void handleUpdateUserInfo(){
+        System.out.println(PasswordEncryption.decryptPassword(ControllerFactory.getInstance().getLoggedUser().asDonor().get().getPassword()));
+
+        var newUsername = newUsernameField.getText();
+        var newPhoneNumber = newPhoneNumberField.getText();
+        var oldPassword = oldPasswordField.getText();
+        var newPassword = newPasswordField.getText();
+
+        if(oldPassword == null && newPassword == null &&
+        newUsername == null && newPhoneNumber == null){
+            ControllerFactory.getInstance().showMessage(Alert.AlertType.ERROR, null, "Atentie!", "Nu ai facut nicio modificare! Introdu date pentru a actualiza informatiile!");
+
+            return;
+        }
+
+        if(oldPassword != null &&
+                !PasswordEncryption.decryptPassword(ControllerFactory.getInstance().getLoggedUser().asDonor().get().getPassword()).equals(oldPassword)){
+            ControllerFactory.getInstance().showMessage(Alert.AlertType.ERROR, null, "Atentie!", "Ai gresit parola actuala!");
+
+            return;
+        }
+
+        if(oldPassword == null || newPassword == null){
+            ControllerFactory.getInstance().showMessage(Alert.AlertType.ERROR, null, "Atentie!", "Pentru a schimba parola trebuie sa introduci atat parola veche, cat si cea noua!");
+
+            return;
+        }
+
+        try{
+            var user = ControllerFactory.getInstance().getLoggedUser().asDonor().get();
+            var updatedUser = this.services.updateUser(user, newUsername, newPhoneNumber, newPassword);
+            ControllerFactory.getInstance().setUser(updatedUser);
+
+            ControllerFactory.getInstance().showMessage(Alert.AlertType.CONFIRMATION, null, "Felicitari!",
+                    "Datele actualizate au fost salvate cu succes!");
+
+            this.resetFields();
+        }catch(Exception e){
+            ControllerFactory.getInstance().showMessage(Alert.AlertType.ERROR, null, "Eroare", e.getMessage());
         }
     }
 }
