@@ -109,10 +109,8 @@ public class DonorEligibilityFormController extends Controller {
                     Alert.AlertType.CONFIRMATION,
                     "Succes",
                     "Felicitari",
-                    "Formularul a fost trimis cu succes! Un medic iti va vizualiza raspunsurile in cel mai scurt timp"
+                    "Formularul a fost trimis cu succes! In urma rezultatelor, esti eligibil pentru donare!"
             );
-
-            this.services.setDonorEligibility(ControllerFactory.getInstance().getLoggedUser().asDonor().get(), 2);
 
             ControllerFactory.getInstance().runPage(ControllerType.DONOR_PROFILE_PAGE, sendFormButton);
         } catch (Exception e) {

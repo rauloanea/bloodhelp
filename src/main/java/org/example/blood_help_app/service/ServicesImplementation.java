@@ -10,6 +10,7 @@ import org.example.blood_help_app.repository.interfaces.*;
 import org.example.blood_help_app.utils.PasswordEncryption;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class ServicesImplementation {
@@ -88,9 +89,39 @@ public class ServicesImplementation {
     }
 
     public void checkEligibility(Donor user, Integer age, String gender, Double weight, LocalDateTime lastDonation, String otherInfo) {
-        if(lastDonation != null && lastDonation.getYear() == LocalDateTime.now().getYear()
-                && LocalDateTime.now().getMonth().getValue() - lastDonation.getMonth().getValue() < 4)
-            throw new RuntimeException("Nu poti dona deoarece ai facut o donatie in ultimele 3 luni!");
+        if (lastDonation != null) {
+            long monthsBetween = ChronoUnit.MONTHS.between(lastDonation, LocalDateTime.now());
+            if (monthsBetween < 3) {
+                throw new RuntimeException("Trebuie să așteptați 3 luni între donații!");
+            }
+        }
+
+        if(weight < 50)
+            throw new RuntimeException("Nu poti dona deoarece ai o greutate prea mica!");
+
+        if(age < 18 || age > 65)
+            throw new RuntimeException("Nu poti dona deoarece nu indeplinesti criteriie de varsta!");
+
+        String lowerOtherInfo = otherInfo.toLowerCase();
+        if (gender.equalsIgnoreCase("Feminin")) {
+            if (lowerOtherInfo.contains("sarcina") || lowerOtherInfo.contains("alaptare")) {
+                throw new RuntimeException("Femeile gravide sau care alăptează nu pot dona sânge!");
+            }
+            if (lowerOtherInfo.contains("menstruatie")) {
+                throw new RuntimeException("Nu recomandăm donarea în timpul menstruației!");
+            }
+        }
+
+        // cazuri generale
+        if (lowerOtherInfo.contains("hiv") || lowerOtherInfo.contains("hepatita")
+                || lowerOtherInfo.contains("boli")) {
+            throw new RuntimeException("Nu poți dona din cauza unor probleme de sănătate!");
+        }
+        if (lowerOtherInfo.contains("tatuaj") || lowerOtherInfo.contains("piercing")) {
+            throw new RuntimeException("Trebuie să aștepți 6 luni după tatuaj/piercing!");
+        }
+
+        this.setDonorEligibility(user, 1);
     }
 
     public List<DonationCenter> getCenters(){
