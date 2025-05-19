@@ -30,7 +30,7 @@ public class User extends Entity<Integer> {
     protected LocalDateTime birthdayDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "user_type", nullable = false, insertable = false, updatable = false, columnDefinition = "TEXT DEFAULT 'USER'")
+    @Column(name = "user_type", nullable = false, insertable = false, updatable = false, columnDefinition = "TEXT DEFAULT 'DONOR'")
     protected UserTypeEnum userType;
 
     public User(String name, String email, String username, String password, String phoneNumber, LocalDateTime birthdayDate, UserTypeEnum userType) {
