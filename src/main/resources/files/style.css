@@ -183,5 +183,54 @@
     -fx-background-color: #0288D1;
 }
 
+/* Stiluri pentru cardurile de centre */
+.center-card {
+    -fx-background-color: #E8F5E9;
+    -fx-padding: 15;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
+    -fx-spacing: 8;
+}
+
+.center-card:hover {
+    -fx-background-color: #C8E6C9;
+}
+
+/* Stiluri pentru label-uri */
+.label-title-center {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2E7D32;
+}
+
+.label-info-center {
+    -fx-font-size: 16px;
+    -fx-text-fill: #333333;
+}
+
+.label-highlight-center {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #D32F2F;
+}
+
+/* Stiluri pentru butoane */
+.button-primary {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-padding: 5 10;
+    -fx-cursor: hand;
+}
+
+.button-primary:hover {
+    -fx-background-color: #388E3C;
+}
+
+.button-primary:pressed {
+    -fx-background-color: #1B5E20;
+}
+
 
 

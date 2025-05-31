@@ -64,7 +64,6 @@ public class DonorProfileController extends Controller {
         this.affirmativeEligibilityButton.setOnAction(_ ->
                 ControllerFactory.getInstance().runPage(ControllerType.ELIGIBILITY_FORM, affirmativeEligibilityButton));
         this.checkDoctorButton.setOnAction(_ -> {
-            //TODO: implement doctor notification, then refactor
             ControllerFactory.getInstance().showMessage(
                     Alert.AlertType.CONFIRMATION,
                     "Succes",
@@ -144,14 +143,12 @@ public class DonorProfileController extends Controller {
             return;
         }
 
-        //TODO: implement appointments on screen logic
         labelAppointments.setText("De aici poti vedea si anula programarile tale viitoare");
 
         vboxAppointments.setVisible(true);
         vboxAppointments.setManaged(true);
         vboxAppointments.getChildren().clear();
 
-        // Adaugă fiecare programare ca card
         appointments.forEach(appointment -> {
             VBox appointmentCard = createAppointmentCard(appointment);
             vboxAppointments.getChildren().add(appointmentCard);

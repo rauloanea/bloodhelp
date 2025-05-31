@@ -10,6 +10,7 @@ import javafx.stage.StageStyle;
 import org.example.blood_help_app.controllers.controller_implementation.donor_pages_controllers.*;
 import org.example.blood_help_app.controllers.controller_implementation.general.CreateAccountController;
 import org.example.blood_help_app.controllers.controller_implementation.general.LoginController;
+import org.example.blood_help_app.domain.donationsdata.DonationCenter;
 import org.example.blood_help_app.domain.users.utils.AppUser;
 import org.example.blood_help_app.domain.users.utils.LoggedUserContext;
 import org.example.blood_help_app.service.ServicesImplementation;
@@ -21,6 +22,8 @@ public class ControllerFactory {
     private ServicesImplementation services;
 
     private LoggedUserContext loggedUser;
+
+    private DonationCenter selectedDonationCenter;
 
     private ControllerFactory() {}
 
@@ -47,6 +50,14 @@ public class ControllerFactory {
         this.firstStage = firstStage;
     }
 
+    public void setSelectedDonationCenter(final DonationCenter selectedDonationCenter) {
+        this.selectedDonationCenter = selectedDonationCenter;
+    }
+
+    public DonationCenter getSelectedDonationCenter() {
+        return selectedDonationCenter;
+    }
+
     public void runPage(ControllerType controllerType, Button buttonTrigger){
         if(this.firstStage != null){
             runLoginPage();
@@ -64,6 +75,7 @@ public class ControllerFactory {
             case ELIGIBILITY_FORM -> runEligibilityFormPage();
             case MAKE_APPOINTMENT_FORM -> runAppointmentFormPage();
             case DONATION_HISTORY -> runDonationHistoryPage();
+            case DONATION_CENTERS -> runDonationCentersPage();
         }
 
         if(buttonTrigger != null){
@@ -172,6 +184,15 @@ public class ControllerFactory {
     private void runDonationHistoryPage(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/donation_history_page.fxml"));
         DonorDonationHistoryController controller = new DonorDonationHistoryController();
+        controller.setServices(services);
+        loader.setController(controller);
+
+        this.runGenericPage(loader);
+    }
+
+    private void runDonationCentersPage(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/donation_centers_page.fxml"));
+        DonorDonationCentersController controller = new DonorDonationCentersController();
         controller.setServices(services);
         loader.setController(controller);
 

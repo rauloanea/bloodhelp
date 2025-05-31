@@ -52,6 +52,14 @@ public class DonorAppointmentPageController extends Controller {
         minutesDropdown.setValue(0);
 
         setCentersData();
+
+        if(ControllerFactory.getInstance().getSelectedDonationCenter() != null){
+            var center = ControllerFactory.getInstance().getSelectedDonationCenter();
+            centerDropdown.getSelectionModel().select(center);
+            countyDropdown.getSelectionModel().select(center.getAddress());
+
+            ControllerFactory.getInstance().setSelectedDonationCenter(null);
+        }
     }
 
     private void handleFormSending() {

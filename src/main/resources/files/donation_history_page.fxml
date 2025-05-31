@@ -10,7 +10,7 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="590.0" prefWidth="885.0">
                <children>
-                  <Label layoutX="35.0" layoutY="26.0" text="Istoricul donatiilor tale anterioare" />
+                  <Label layoutX="35.0" layoutY="26.0" styleClass="label-info-blood" text="Istoricul donatiilor tale anterioare" />
                   <Label fx:id="labelHistoryInfo" layoutX="35.0" layoutY="63.0" styleClass="label-info" text="Momentan nu ai nicio donatie facuta!" />
                   <VBox fx:id="vboxDonations" layoutX="35.0" layoutY="109.0" prefHeight="537.0" prefWidth="815.0" />
                </children></AnchorPane>

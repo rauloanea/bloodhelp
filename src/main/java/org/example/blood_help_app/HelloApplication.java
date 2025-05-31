@@ -41,7 +41,7 @@ public class HelloApplication extends Application {
         var donorRepo = new DonorMappedRepository();
         var donationCenterRepo = new DonationCenterMappedRepository();
         var donationRepo = new DonationMappedRepository();
-        var bloodUnitRepo = new BloodUnitRepository(props, donationRepo, donationCenterRepo);
+        var bloodUnitRepo = new BloodUnitMappedRepository();
         var appointmentRepo = new AppointmentMappedRepository();
 
         return new ServicesImplementation(userRepo, adminRepo, donorRepo, doctorRepo,

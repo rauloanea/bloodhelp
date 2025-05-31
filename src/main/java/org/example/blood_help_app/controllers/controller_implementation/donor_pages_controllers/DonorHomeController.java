@@ -58,8 +58,8 @@ public class DonorHomeController extends Controller {
         donationAppointmentButton.setOnAction(_ -> handleAppointmentAction());
         donationAppointmentSecondButton.setOnAction(_ -> handleAppointmentAction());
         donationHistoryButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType.DONATION_HISTORY, donationHistoryButton));
-//        donationCentersButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType.DONATION_CENTERS, donationCentersButton));
-//        donationCentersSecondButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType.DONATION_CENTERS, donationCentersSecondButton));
+        donationCentersButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType.DONATION_CENTERS, donationCentersButton));
+        donationCentersSecondButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType.DONATION_CENTERS, donationCentersSecondButton));
     }
 
     private void handleAppointmentAction() {

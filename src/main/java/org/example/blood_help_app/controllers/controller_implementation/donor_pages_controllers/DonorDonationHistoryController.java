@@ -37,7 +37,7 @@ public class DonorDonationHistoryController extends Controller {
     @FXML
     private void initialize() {
         this.homeButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType.DONOR_HOME, homeButton));
-//        this.donationCentersButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType))
+        this.donationCentersButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType.DONATION_CENTERS, donationCentersButton));
         donationAppointmentButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType.MAKE_APPOINTMENT_FORM, donationAppointmentButton));
         profileButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType.DONOR_PROFILE_PAGE, profileButton));
         loadDonations();

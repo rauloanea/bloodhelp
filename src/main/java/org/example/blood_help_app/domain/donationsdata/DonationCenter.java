@@ -14,7 +14,7 @@ public class DonationCenter extends Entity<Integer> {
     @Column(nullable = false)
     private String address;
 
-    @OneToMany(mappedBy = "donationCenter", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "donationCenter", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<BloodUnit> inventory;
 
     @Column(name = "contact_info")
