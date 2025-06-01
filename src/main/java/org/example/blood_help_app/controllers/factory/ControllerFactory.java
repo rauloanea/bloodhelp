@@ -7,7 +7,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.example.blood_help_app.controllers.controller_implementation.admin_pages_controller.AdminHomeController;
 import org.example.blood_help_app.controllers.controller_implementation.doctor_pages_controllers.DoctorAppointmentRequestController;
+import org.example.blood_help_app.controllers.controller_implementation.doctor_pages_controllers.DoctorBloodRequestController;
 import org.example.blood_help_app.controllers.controller_implementation.donor_pages_controllers.*;
 import org.example.blood_help_app.controllers.controller_implementation.general.CreateAccountController;
 import org.example.blood_help_app.controllers.controller_implementation.general.LoginController;
@@ -69,7 +71,7 @@ public class ControllerFactory {
         switch(controllerType){
             case LOGIN -> runLoginPage();
             case DONOR_HOME -> runDonorHomePage();
-            case ADMIN_HOME -> throw new RuntimeException("Not implemented!");
+            case ADMIN_HOME -> runAdminHomePage();
             case DOCTOR_HOME -> runDoctorHomePage();
             case CREATE_ACCOUNT -> runCreateAccountPage();
             case DONOR_PROFILE_PAGE -> runDonorProfilePage();
@@ -77,6 +79,7 @@ public class ControllerFactory {
             case MAKE_APPOINTMENT_FORM -> runAppointmentFormPage();
             case DONATION_HISTORY -> runDonationHistoryPage();
             case DONATION_CENTERS -> runDonationCentersPage();
+            case DOCTOR_BLOOD_REQUEST -> runDoctorBloodRequest();
         }
 
         if(buttonTrigger != null){
@@ -206,6 +209,28 @@ public class ControllerFactory {
 
         controller.setServices(services);
         services.addObserver(controller);
+
+        loader.setController(controller);
+
+        this.runGenericPage(loader);
+    }
+
+    private void runDoctorBloodRequest(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/doctor_bloodrequest_page.fxml"));
+        DoctorBloodRequestController controller = new DoctorBloodRequestController();
+
+        controller.setServices(services);
+
+        loader.setController(controller);
+
+        this.runGenericPage(loader);
+    }
+
+    private void runAdminHomePage(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/admin_home_page.fxml"));
+        AdminHomeController controller = new AdminHomeController();
+
+        controller.setServices(services);
 
         loader.setController(controller);
 

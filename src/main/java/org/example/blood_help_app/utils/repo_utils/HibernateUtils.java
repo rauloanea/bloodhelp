@@ -1,9 +1,6 @@
 package org.example.blood_help_app.utils.repo_utils;
 
-import org.example.blood_help_app.domain.donationsdata.Appointment;
-import org.example.blood_help_app.domain.donationsdata.BloodUnit;
-import org.example.blood_help_app.domain.donationsdata.Donation;
-import org.example.blood_help_app.domain.donationsdata.DonationCenter;
+import org.example.blood_help_app.domain.donationsdata.*;
 import org.example.blood_help_app.domain.users.Admin;
 import org.example.blood_help_app.domain.users.Doctor;
 import org.example.blood_help_app.domain.users.Donor;
@@ -40,7 +37,8 @@ public class HibernateUtils {
                     .addAnnotatedClass(Admin.class)
                     .addAnnotatedClass(Doctor.class)
                     .addAnnotatedClass(Donor.class)
-                    .addAnnotatedClass(User.class);
+                    .addAnnotatedClass(User.class)
+                    .addAnnotatedClass(BloodRequest.class);
 
             return configuration.buildSessionFactory();
         } catch (Exception e) {

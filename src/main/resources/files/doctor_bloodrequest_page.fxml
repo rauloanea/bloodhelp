@@ -35,7 +35,7 @@
                <Insets top="220.0" />
             </StackPane.margin>
          </Button>
-         <Button fx:id="sendBloodRequestButton" mnemonicParsing="false" text="Trimite cerere de sange">
+         <Button fx:id="donorEligibilityButton" mnemonicParsing="false" text="Eligibilitate donatori">
             <StackPane.margin>
                <Insets top="120.0" />
             </StackPane.margin>
@@ -47,9 +47,16 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="690.0" prefWidth="885.0">
                <children>
-                  <Label layoutX="31.0" layoutY="31.0" text="Vizualizeaza cereri eligibilitate" />
-                  <Label fx:id="labelInfo" layoutX="31.0" layoutY="71.0" prefHeight="59.0" prefWidth="558.0" styleClass="label-info" text="De aici poti programa o intalnire cu donatorii care doresc sa fie consultati inainte de a dona" />
-                  <VBox fx:id="vboxAppointmentsRequests" layoutX="27.0" layoutY="138.0" prefHeight="37.0" prefWidth="582.0" />
+                  <Label layoutX="31.0" layoutY="31.0" text="Cerere de sange" />
+                  <Label fx:id="labelInfo" layoutX="31.0" layoutY="71.0" prefHeight="59.0" prefWidth="558.0" styleClass="label-info" text="De aici poti face o cerere de sange, iar administratorii se vor ocupa de restul procedurilor" />
+                  <ComboBox fx:id="bloodTypeDropdown" layoutX="31.0" layoutY="157.0" prefWidth="150.0" promptText="Tipul de sange" />
+                  <Button fx:id="minusButton" layoutX="404.0" layoutY="237.0" mnemonicParsing="false" text="-" />
+                  <Button fx:id="plusButton" layoutX="498.0" layoutY="237.0" mnemonicParsing="false" text="+" />
+                  <Label fx:id="quantityLabel" layoutX="464.0" layoutY="238.0" textAlignment="CENTER" />
+                  <Label layoutX="299.0" layoutY="244.0" styleClass="label-info" text="Cantitate" />
+                  <ComboBox fx:id="donationCentersDropdown" layoutX="258.0" layoutY="157.0" prefHeight="26.0" prefWidth="319.0" promptText="Centrul de donare pentru care se face cererea" />
+                  <TextArea fx:id="notesField" layoutX="36.0" layoutY="227.0" prefHeight="200.0" prefWidth="200.0" promptText="Note" styleClass="text-field" />
+                  <Button fx:id="sendRequestButton" layoutX="371.0" layoutY="345.0" mnemonicParsing="false" text="Trimite cerere" />
                </children></AnchorPane>
             </content>
          <BorderPane.margin>

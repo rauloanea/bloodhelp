@@ -7,9 +7,11 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import org.example.blood_help_app.controllers.controller_implementation.general.Controller;
 import org.example.blood_help_app.controllers.factory.ControllerFactory;
+import org.example.blood_help_app.controllers.factory.ControllerType;
 import org.example.blood_help_app.domain.donationsdata.DonationCenter;
 import org.example.blood_help_app.domain.enums.AppointmentStatus;
 import org.example.blood_help_app.domain.users.Donor;
@@ -31,6 +33,10 @@ public class DoctorAppointmentRequestController extends Controller implements IO
     private Label labelInfo;
     @FXML
     private VBox vboxAppointmentsRequests;
+    @FXML
+    private Button exitButton;
+    @FXML
+    private Button sendBloodRequestButton;
 
     private List<DonationCenter> allCenters;
 
@@ -43,6 +49,9 @@ public class DoctorAppointmentRequestController extends Controller implements IO
         // Încarcă toate centrele de donare o singură dată
         allCenters = services.getDonationCenters();
         initializeDonorsApp();
+
+        this.exitButton.setOnAction(_ -> ((Stage) exitButton.getScene().getWindow()).close());
+        this.sendBloodRequestButton.setOnAction(_ -> ControllerFactory.getInstance().runPage(ControllerType.DOCTOR_BLOOD_REQUEST, sendBloodRequestButton));
     }
 
     @Override

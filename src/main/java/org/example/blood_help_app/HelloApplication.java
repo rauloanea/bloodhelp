@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import org.example.blood_help_app.controllers.factory.ControllerFactory;
 import org.example.blood_help_app.controllers.factory.ControllerType;
-import org.example.blood_help_app.repository.implementation.db.*;
 import org.example.blood_help_app.repository.implementation.hibernate.*;
 import org.example.blood_help_app.service.ServicesImplementation;
 
@@ -36,16 +35,17 @@ public class HelloApplication extends Application {
 
     private static ServicesImplementation getService(Properties props) {
         var userRepo = new UserMappedRepository();
-        var adminRepo = new AdminRepository(props, userRepo);
+        var adminRepo = new AdminMappedRepository();
         var doctorRepo = new DoctorMappedRepository();
         var donorRepo = new DonorMappedRepository();
         var donationCenterRepo = new DonationCenterMappedRepository();
         var donationRepo = new DonationMappedRepository();
-        var bloodUnitRepo = new BloodUnitMappedRepository();
+        var bloodRequestRepo = new BloodRequestMappedRepository();
         var appointmentRepo = new AppointmentMappedRepository();
+        var bloodUnitRepo = new BloodUnitMappedRepository();
 
         return new ServicesImplementation(userRepo, adminRepo, donorRepo, doctorRepo,
-                donationRepo, donationCenterRepo, bloodUnitRepo, appointmentRepo);
+                donationRepo, donationCenterRepo, bloodRequestRepo, appointmentRepo, bloodUnitRepo);
     }
 
     public static void main(String[] args) {

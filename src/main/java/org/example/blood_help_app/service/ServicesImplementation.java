@@ -1,9 +1,12 @@
 package org.example.blood_help_app.service;
 
 import org.example.blood_help_app.domain.donationsdata.Appointment;
+import org.example.blood_help_app.domain.donationsdata.BloodRequest;
 import org.example.blood_help_app.domain.donationsdata.Donation;
 import org.example.blood_help_app.domain.donationsdata.DonationCenter;
 import org.example.blood_help_app.domain.enums.AppointmentStatus;
+import org.example.blood_help_app.domain.enums.BloodTypeEnum;
+import org.example.blood_help_app.domain.enums.RequestStatus;
 import org.example.blood_help_app.domain.users.*;
 import org.example.blood_help_app.domain.users.utils.AppUser;
 import org.example.blood_help_app.repository.interfaces.*;
@@ -25,8 +28,9 @@ public class ServicesImplementation implements IObservable {
     private final IDoctorRepository doctorRepo;
     private final IDonationRepository donationRepo;
     private final IDonationCenterRepository donationCenterRepo;
-    private final IBloodUnitRepository bloodUnitRepo;
+    private final IBloodRequestRepository bloodRequestRepo;
     private final IAppointmentRepository appointmentRepo;
+    private final IBloodUnitRepository bloodUnitRepo;
 
     public ServicesImplementation(
             IUserRepository userRepo,
@@ -35,8 +39,9 @@ public class ServicesImplementation implements IObservable {
             IDoctorRepository doctorRepo,
             IDonationRepository donationRepo,
             IDonationCenterRepository donationCenterRepo,
-            IBloodUnitRepository bloodUnitRepo,
-            IAppointmentRepository appointmentRepo
+            IBloodRequestRepository bloodRequestRepo,
+            IAppointmentRepository appointmentRepo,
+            IBloodUnitRepository bloodUnitRepo
     ) {
         this.userRepo = userRepo;
         this.adminRepo = adminRepo;
@@ -44,8 +49,9 @@ public class ServicesImplementation implements IObservable {
         this.doctorRepo = doctorRepo;
         this.donationRepo = donationRepo;
         this.donationCenterRepo = donationCenterRepo;
-        this.bloodUnitRepo = bloodUnitRepo;
+        this.bloodRequestRepo = bloodRequestRepo;
         this.appointmentRepo = appointmentRepo;
+        this.bloodUnitRepo = bloodUnitRepo;
     }
 
     @Override
@@ -214,5 +220,10 @@ public class ServicesImplementation implements IObservable {
     public Appointment findEligibilityAppointment(Donor donor){
         return appointmentRepo.findEligibilityAppointment(donor)
                 .orElseThrow(() -> new RuntimeException("Eroare la gasirea programarii"));
+    }
+
+    public void createBloodRequest(BloodTypeEnum bloodType, int currentQuantity, Doctor doctor, DonationCenter selectedCenter, String notes) {
+        var newBloodRequest = new BloodRequest(bloodType, currentQuantity, doctor, selectedCenter, RequestStatus.PENDING, notes);
+        bloodRequestRepo.save(newBloodRequest);
     }
 }

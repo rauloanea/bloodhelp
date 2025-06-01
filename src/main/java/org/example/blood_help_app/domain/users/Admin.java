@@ -1,9 +1,6 @@
 package org.example.blood_help_app.domain.users;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.example.blood_help_app.domain.enums.AccessLevelEnum;
 import org.example.blood_help_app.domain.enums.UserTypeEnum;
 import org.example.blood_help_app.domain.users.utils.AppUser;
@@ -12,6 +9,7 @@ import java.time.LocalDateTime;
 
 @jakarta.persistence.Entity
 @Table(name="admins")
+@DiscriminatorValue("ADMIN")
 public class Admin extends User implements AppUser {
     @Enumerated(EnumType.STRING)
     @Column(name = "access_level", nullable = false, columnDefinition = "TEXT DEFAULT 'STANDARD'")
