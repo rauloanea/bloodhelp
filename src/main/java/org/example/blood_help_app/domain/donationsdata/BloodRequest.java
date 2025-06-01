@@ -20,7 +20,7 @@ public class BloodRequest extends Entity<Integer> {
     @JoinColumn(name = "doctor_id", nullable = false)
     private Doctor requestingDoctor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "center_id", nullable = false)
     private DonationCenter destinationCenter;
 

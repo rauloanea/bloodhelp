@@ -244,5 +244,26 @@
     -fx-background-color: #1B5E20;
 }
 
+.request-card {
+    -fx-background-color: #f8f8f8;
+    -fx-padding: 10px;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 1);
+}
+
+.card-field {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+}
+
+.empty-list-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #666;
+    -fx-alignment: center;
+}
+
 
 

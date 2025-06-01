@@ -1,6 +1,8 @@
 package org.example.blood_help_app.repository.implementation.hibernate;
 
 import org.example.blood_help_app.domain.donationsdata.BloodUnit;
+import org.example.blood_help_app.domain.enums.BloodTypeEnum;
+import org.example.blood_help_app.domain.enums.BloodUnitStatusEnum;
 import org.example.blood_help_app.repository.interfaces.IBloodUnitRepository;
 import org.example.blood_help_app.utils.repo_utils.HibernateUtils;
 import org.hibernate.Session;
@@ -103,6 +105,44 @@ public class BloodUnitMappedRepository implements IBloodUnitRepository {
             return query.list();
         } catch (Exception e) {
             return List.of();
+        }
+    }
+
+    @Override
+    public void deleteFirstNUnits(BloodTypeEnum bloodType, int quantity) {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Quantity must be positive");
+        }
+
+        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            try {
+                // Find the first N available units of the specified type
+                List<BloodUnit> unitsToUpdate = session.createQuery(
+                                "FROM BloodUnit WHERE bloodType = :bloodType AND status = 'AVAILABLE' " +
+                                        "ORDER BY expirationDate ASC", BloodUnit.class)
+                        .setParameter("bloodType", bloodType)
+                        .setMaxResults(quantity)
+                        .list();
+
+                if (unitsToUpdate.size() < quantity) {
+                    throw new IllegalStateException("Not enough available units of type " + bloodType +
+                            ". Requested: " + quantity + ", Available: " + unitsToUpdate.size());
+                }
+
+                // Update status to USED instead of deleting
+                for (BloodUnit unit : unitsToUpdate) {
+                    unit.setStatus(BloodUnitStatusEnum.DISTRIBUTED);
+                    session.merge(unit);
+                }
+
+                transaction.commit();
+            } catch (Exception e) {
+                if (transaction != null) {
+                    transaction.rollback();
+                }
+                throw new RuntimeException("Failed to update blood units", e);
+            }
         }
     }
 }

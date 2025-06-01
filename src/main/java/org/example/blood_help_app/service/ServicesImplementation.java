@@ -1,9 +1,6 @@
 package org.example.blood_help_app.service;
 
-import org.example.blood_help_app.domain.donationsdata.Appointment;
-import org.example.blood_help_app.domain.donationsdata.BloodRequest;
-import org.example.blood_help_app.domain.donationsdata.Donation;
-import org.example.blood_help_app.domain.donationsdata.DonationCenter;
+import org.example.blood_help_app.domain.donationsdata.*;
 import org.example.blood_help_app.domain.enums.AppointmentStatus;
 import org.example.blood_help_app.domain.enums.BloodTypeEnum;
 import org.example.blood_help_app.domain.enums.RequestStatus;
@@ -225,5 +222,21 @@ public class ServicesImplementation implements IObservable {
     public void createBloodRequest(BloodTypeEnum bloodType, int currentQuantity, Doctor doctor, DonationCenter selectedCenter, String notes) {
         var newBloodRequest = new BloodRequest(bloodType, currentQuantity, doctor, selectedCenter, RequestStatus.PENDING, notes);
         bloodRequestRepo.save(newBloodRequest);
+    }
+
+    public List<BloodRequest> getAllBloodRequests() {
+        return bloodRequestRepo.findAll();
+    }
+
+    public List<BloodUnit> getAllBloodUnits(){
+        return bloodUnitRepo.findAll();
+    }
+
+    public void updateBloodRequest(BloodRequest bloodRequest) {
+        bloodRequestRepo.update(bloodRequest);
+    }
+
+    public void subtractBloodUnits(BloodTypeEnum bloodType, int quantity){
+        bloodUnitRepo.deleteFirstNUnits(bloodType, quantity);
     }
 }

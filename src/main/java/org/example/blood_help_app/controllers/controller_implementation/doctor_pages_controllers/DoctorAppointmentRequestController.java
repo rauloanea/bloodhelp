@@ -79,7 +79,7 @@ public class DoctorAppointmentRequestController extends Controller implements IO
 
         // 2. Informații donator
         Label nameLabel = new Label("Donator: " + donor.getName());
-        nameLabel.getStyleClass().add("label-info");
+        nameLabel.getStyleClass().add("label");
         nameLabel.setWrapText(true);
 
         Label bloodTypeLabel = new Label("Grupa sanguină: " +
@@ -123,14 +123,20 @@ public class DoctorAppointmentRequestController extends Controller implements IO
 
         buttonsBox.getChildren().addAll(rejectButton, acceptButton);
 
+        var centerLabel = new Label("Selectează centrul:");
+        centerLabel.getStyleClass().add("label-info");
+
+        var dataTimeLabel = new Label("Selectează data și ora consultației:");
+        dataTimeLabel.getStyleClass().add("label-info");
+
         // 6. Adaugă elementele în card
         card.getChildren().addAll(
                 nameLabel,
                 bloodTypeLabel,
                 contactLabel,
-                new Label("Selectează centrul:"),
+                centerLabel,
                 centerComboBox,
-                new Label("Selectează data și ora consultației:"),
+                dataTimeLabel,
                 dateTimePicker,
                 buttonsBox
         );
