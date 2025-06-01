@@ -1,12 +1,14 @@
 package org.example.blood_help_app.controllers.controller_implementation.admin_pages_controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.blood_help_app.controllers.controller_implementation.general.Controller;
+import org.example.blood_help_app.controllers.factory.ControllerFactory;
 import org.example.blood_help_app.domain.donationsdata.BloodRequest;
 import org.example.blood_help_app.domain.donationsdata.BloodUnit;
 import org.example.blood_help_app.domain.enums.BloodUnitStatusEnum;
@@ -30,11 +32,11 @@ public class AdminHomeController extends Controller {
         vboxBloodRequests.getChildren().clear();
         vboxBloodRequests.setSpacing(15);
 
-        List<BloodRequest> requests = services.getAllBloodRequests();
+        List<BloodRequest> requests = services.getAllBloodRequests().stream().filter(req -> req.getStatus().equals(RequestStatus.PENDING)).toList();
         List<BloodUnit> allBloodUnits = services.getAllBloodUnits();
 
         if (requests.isEmpty()) {
-            Label noRequestsLabel = new Label("No blood requests available");
+            Label noRequestsLabel = new Label("Momentan nu exista cereri de sange");
             noRequestsLabel.getStyleClass().add("empty-list-label");
             vboxBloodRequests.getChildren().add(noRequestsLabel);
             return;
@@ -150,6 +152,6 @@ public class AdminHomeController extends Controller {
 
     private void showSuccessAlert(String message) {
         // Implement your alert/show notification method here
-        System.out.println(message); // Replace with actual UI notification
+        ControllerFactory.getInstance().showMessage(Alert.AlertType.NONE, null, null, message);
     }
 }
