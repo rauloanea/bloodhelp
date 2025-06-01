@@ -2,7 +2,7 @@ package org.example.blood_help_app.repository.implementation.db;
 
 import org.example.blood_help_app.domain.generic.Entity;
 import org.example.blood_help_app.repository.interfaces.IRepository;
-import org.example.blood_help_app.utils.JDBCUtils;
+import org.example.blood_help_app.utils.repo_utils.JDBCUtils;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

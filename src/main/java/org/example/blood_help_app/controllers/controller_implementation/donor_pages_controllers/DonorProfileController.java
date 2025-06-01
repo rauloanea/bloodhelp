@@ -7,7 +7,7 @@ import org.example.blood_help_app.controllers.controller_implementation.general.
 import org.example.blood_help_app.controllers.factory.ControllerFactory;
 import org.example.blood_help_app.controllers.factory.ControllerType;
 import org.example.blood_help_app.domain.donationsdata.Appointment;
-import org.example.blood_help_app.utils.PasswordEncryption;
+import org.example.blood_help_app.utils.password_encryption.PasswordEncryption;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -68,7 +68,8 @@ public class DonorProfileController extends Controller {
                     Alert.AlertType.CONFIRMATION,
                     "Succes",
                     "Felicitari",
-                    "Programarea a fost facuta cu succes! Vei primi informatiile privind programarea facuta pe mail!"
+                    "Cererea pentru programarea cu doctorul a fost facuta cu succes! Vei fi anuntat in cel mai scurt timp" +
+                            " in legatura cu informatiile despre aceasta!"
             );
 
             this.services.setDonorEligibility(ControllerFactory.getInstance()
@@ -78,6 +79,8 @@ public class DonorProfileController extends Controller {
 
             this.labelEligibility.setText("Vei fi anuntat de catre medic daca esti eligibil sau nu");
             setVisibilityForEligibilityButtons(false);
+
+            //TODO: notify doctors
         });
 
         this.checkEligibility();

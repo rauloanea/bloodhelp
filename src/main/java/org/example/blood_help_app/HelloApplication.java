@@ -37,7 +37,7 @@ public class HelloApplication extends Application {
     private static ServicesImplementation getService(Properties props) {
         var userRepo = new UserMappedRepository();
         var adminRepo = new AdminRepository(props, userRepo);
-        var doctorRepo = new DoctorRepository(props, userRepo);
+        var doctorRepo = new DoctorMappedRepository();
         var donorRepo = new DonorMappedRepository();
         var donationCenterRepo = new DonationCenterMappedRepository();
         var donationRepo = new DonationMappedRepository();

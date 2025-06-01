@@ -2,7 +2,7 @@ package org.example.blood_help_app.repository.implementation.hibernate;
 
 import org.example.blood_help_app.domain.donationsdata.BloodUnit;
 import org.example.blood_help_app.repository.interfaces.IBloodUnitRepository;
-import org.example.blood_help_app.utils.HibernateUtils;
+import org.example.blood_help_app.utils.repo_utils.HibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;

@@ -87,7 +87,7 @@ public class DonorAppointmentPageController extends Controller {
     }
 
     private void setCentersData() {
-        centers = services.getCenters();
+        centers = services.getDonationCenters();
 
         var counties = centers.stream()
                 .map(DonationCenter::getAddress)

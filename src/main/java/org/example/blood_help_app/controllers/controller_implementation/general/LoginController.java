@@ -60,15 +60,15 @@ public class LoginController extends Controller {
             switch (user) {
                 case Donor donor -> {
                     ControllerFactory.getInstance().setUser(donor);
-                    ControllerFactory.getInstance().runPage(ControllerType.DONOR_HOME, loginButton);
+                    ControllerFactory.getInstance().runPage(ControllerType.DONOR_HOME, null);
                 }
                 case Doctor doctor -> {
                     ControllerFactory.getInstance().setUser(doctor);
-                    ControllerFactory.getInstance().runPage(ControllerType.DOCTOR_HOME, loginButton);
+                    ControllerFactory.getInstance().runPage(ControllerType.DOCTOR_HOME, null);
                 }
                 case Admin admin -> {
                     ControllerFactory.getInstance().setUser(admin);
-                    ControllerFactory.getInstance().runPage(ControllerType.ADMIN_HOME, loginButton);
+                    ControllerFactory.getInstance().runPage(ControllerType.ADMIN_HOME, null);
                 }
                 case null, default -> throw new RuntimeException("Tip de utilizator necunoscut!");
             }

@@ -7,13 +7,18 @@ import org.example.blood_help_app.domain.enums.AppointmentStatus;
 import org.example.blood_help_app.domain.users.*;
 import org.example.blood_help_app.domain.users.utils.AppUser;
 import org.example.blood_help_app.repository.interfaces.*;
-import org.example.blood_help_app.utils.PasswordEncryption;
+import org.example.blood_help_app.utils.observer.IObservable;
+import org.example.blood_help_app.utils.observer.IObserver;
+import org.example.blood_help_app.utils.password_encryption.PasswordEncryption;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ServicesImplementation {
+public class ServicesImplementation implements IObservable {
+    private final List<IObserver> observers = new ArrayList<>();
+
     private final IUserRepository userRepo;
     private final IAdminRepository adminRepo;
     private final IDonorRepository donorRepo;
@@ -41,6 +46,21 @@ public class ServicesImplementation {
         this.donationCenterRepo = donationCenterRepo;
         this.bloodUnitRepo = bloodUnitRepo;
         this.appointmentRepo = appointmentRepo;
+    }
+
+    @Override
+    public void addObserver(IObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(IObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        observers.forEach(IObserver::update);
     }
 
     public void createDonorAccount(User user){
@@ -85,6 +105,10 @@ public class ServicesImplementation {
     public void setDonorEligibility(Donor user, Integer value){
         user.setEligibility(value);
         this.donorRepo.update(user);
+
+        if (value == 2) {
+            notifyObservers();
+        }
     }
 
     public void checkEligibility(Donor user, Integer age, String gender, Double weight, LocalDateTime lastDonation, String otherInfo) {
@@ -123,7 +147,7 @@ public class ServicesImplementation {
         this.setDonorEligibility(user, 1);
     }
 
-    public List<DonationCenter> getCenters(){
+    public List<DonationCenter> getDonationCenters(){
         return this.donationCenterRepo.findAll();
     }
 
@@ -179,5 +203,11 @@ public class ServicesImplementation {
         }
 
         throw new RuntimeException("Eroare la salvarea modificarilor!");
+    }
+
+    public List<Donor> getDonorsWithEligibility(int eligibility) {
+        return donorRepo.findAll().stream()
+                .filter(d -> d.getEligibility() == eligibility)
+                .toList();
     }
 }

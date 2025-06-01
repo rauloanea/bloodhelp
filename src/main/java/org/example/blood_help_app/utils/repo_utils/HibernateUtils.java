@@ -1,4 +1,4 @@
-package org.example.blood_help_app.utils;
+package org.example.blood_help_app.utils.repo_utils;
 
 import org.example.blood_help_app.domain.donationsdata.Appointment;
 import org.example.blood_help_app.domain.donationsdata.BloodUnit;

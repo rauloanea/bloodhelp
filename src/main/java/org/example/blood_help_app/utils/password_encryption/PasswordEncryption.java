@@ -1,4 +1,4 @@
-package org.example.blood_help_app.utils;
+package org.example.blood_help_app.utils.password_encryption;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;

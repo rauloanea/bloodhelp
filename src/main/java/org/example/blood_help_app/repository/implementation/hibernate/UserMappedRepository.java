@@ -2,9 +2,7 @@ package org.example.blood_help_app.repository.implementation.hibernate;
 
 import org.example.blood_help_app.domain.users.User;
 import org.example.blood_help_app.repository.interfaces.IUserRepository;
-import org.example.blood_help_app.utils.HibernateUtils;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.example.blood_help_app.utils.repo_utils.HibernateUtils;
 
 import java.util.List;
 import java.util.Optional;

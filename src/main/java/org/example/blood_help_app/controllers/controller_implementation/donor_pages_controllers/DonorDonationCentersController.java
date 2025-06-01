@@ -39,7 +39,7 @@ public class DonorDonationCentersController extends Controller {
     }
 
     private void loadDonationCenters() {
-        List<DonationCenter> centers = services.getCenters();
+        List<DonationCenter> centers = services.getDonationCenters();
 
         if (centers.isEmpty()) {
             Label noCentersLabel = new Label("Nu există centre de donare disponibile momentan.");

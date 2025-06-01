@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.example.blood_help_app.controllers.controller_implementation.doctor_pages_controllers.DoctorAppointmentRequestController;
 import org.example.blood_help_app.controllers.controller_implementation.donor_pages_controllers.*;
 import org.example.blood_help_app.controllers.controller_implementation.general.CreateAccountController;
 import org.example.blood_help_app.controllers.controller_implementation.general.LoginController;
@@ -69,7 +70,7 @@ public class ControllerFactory {
             case LOGIN -> runLoginPage();
             case DONOR_HOME -> runDonorHomePage();
             case ADMIN_HOME -> throw new RuntimeException("Not implemented!");
-            case DOCTOR_HOME -> throw new RuntimeException("Not implemented!");
+            case DOCTOR_HOME -> runDoctorHomePage();
             case CREATE_ACCOUNT -> runCreateAccountPage();
             case DONOR_PROFILE_PAGE -> runDonorProfilePage();
             case ELIGIBILITY_FORM -> runEligibilityFormPage();
@@ -93,7 +94,7 @@ public class ControllerFactory {
 
             newScene.getStylesheets().add(getClass().getResource("/files/style.css").toExternalForm());
 
-            newStage.initStyle(StageStyle.UNDECORATED);
+//            newStage.initStyle(StageStyle.UNDECORATED);
             newStage.setScene(newScene);
             newStage.show();
         }
@@ -199,6 +200,17 @@ public class ControllerFactory {
         this.runGenericPage(loader);
     }
 
+    public void runDoctorHomePage(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/doctor_home_page.fxml"));
+        DoctorAppointmentRequestController controller = new DoctorAppointmentRequestController();
+
+        controller.setServices(services);
+        services.addObserver(controller);
+
+        loader.setController(controller);
+
+        this.runGenericPage(loader);
+    }
 
     public void showMessage(Alert.AlertType alertType, String title, String headerText, String contentText) {
         Alert alert = new Alert(alertType);
