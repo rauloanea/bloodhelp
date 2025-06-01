@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <ScrollPane fitToHeight="false" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1200.0" prefWidth="885.0">
+               <children>
+                  <Label fx:id="labelName" layoutX="32.0" layoutY="25.0" text="Salut, " />
+                  <Label fx:id="labelEligibility" layoutX="32.0" layoutY="67.0" styleClass="label-info" text="Nu ti-ai verificat eligiblitatea! Vrei sa o faci?" />
+                  <Button fx:id="affirmativeEligibilityButton" layoutX="394.0" layoutY="60.0" mnemonicParsing="false" styleClass="button2" text="Da" />
+                  <Button fx:id="negativeEligibilityButton" layoutX="455.0" layoutY="60.0" mnemonicParsing="false" styleClass="button2" text="Nu" />
+                  <Button fx:id="checkDoctorButton" layoutX="519.0" layoutY="60.0" mnemonicParsing="false" styleClass="button2" text="Consulta un medic" />
+                  <Label layoutX="32.0" layoutY="341.0" text="Programarile tale" />
+                  <Label fx:id="labelAppointments" layoutX="33.0" layoutY="380.0" styleClass="label-info" text="Momentan nu ai nicio programare facuta!" />
+                  <VBox fx:id="vboxAppointments" layoutX="34.0" layoutY="424.0" prefWidth="816.0" spacing="15" style="-fx-padding: 10;" />
+                  <Label layoutX="32.0" layoutY="109.0" text="Datele tale" />
+                  <Label layoutX="33.0" layoutY="149.0" styleClass="label-info" text="De aici poti schimba informatiile de contact si parola" />
+                  <TextField fx:id="newUsernameField" layoutX="51.0" layoutY="198.0" prefHeight="30.0" prefWidth="331.0" promptText="Nume de utilizator nou" />
+                  <TextField fx:id="newPhoneNumberField" layoutX="51.0" layoutY="249.0" prefHeight="30.0" prefWidth="331.0" promptText="Numar de telefon nou" />
+                  <PasswordField fx:id="oldPasswordField" layoutX="453.0" layoutY="197.0" prefHeight="30.0" prefWidth="351.0" promptText="Parola actuala" />
+                  <PasswordField fx:id="newPasswordField" layoutX="453.0" layoutY="249.0" prefHeight="30.0" prefWidth="350.0" promptText="Parola noua" />
+                  <Button fx:id="updateInfoButton" layoutX="685.0" layoutY="299.0" mnemonicParsing="false" text="Actualizeaza" />
+                  <Button fx:id="resetNewInfoButton" layoutX="577.0" layoutY="299.0" mnemonicParsing="false" styleClass="button2" text="Reseteaza" />
+               </children></AnchorPane>
+        </content>
+      </ScrollPane>
+   </center>
+   <top>
+      <HBox prefHeight="47.0" prefWidth="600.0" styleClass="hbox_bar" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="homeButton" mnemonicParsing="false" styleClass="button2" text="Acasa">
+               <HBox.margin>
+                  <Insets left="6.0" top="2.0" />
+               </HBox.margin></Button>
+            <Button fx:id="donationCentersButton" mnemonicParsing="false" styleClass="button2" text="Centre Donare">
+               <HBox.margin>
+                  <Insets left="227.0" top="2.0" />
+               </HBox.margin></Button>
+            <Button fx:id="donationAppointmentButton" mnemonicParsing="false" styleClass="button2" text="Programare Donare">
+               <HBox.margin>
+                  <Insets top="2.0" />
+               </HBox.margin></Button>
+            <Button fx:id="donationHistoryButton" mnemonicParsing="false" styleClass="button2" text="Istoric Donari">
+               <HBox.margin>
+                  <Insets top="2.0" />
+               </HBox.margin></Button>
+            <Button fx:id="profileButton" mnemonicParsing="false" styleClass="button2" text="Gestioneaza Profil">
+               <HBox.margin>
+                  <Insets top="2.0" />
+               </HBox.margin></Button>
+         </children></HBox>
+   </top>
+</BorderPane>

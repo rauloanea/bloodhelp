@@ -151,8 +151,8 @@ public class ServicesImplementation implements IObservable {
         return this.donationCenterRepo.findAll();
     }
 
-    public void makeAppointment(Donor user, DonationCenter center, LocalDateTime appointmentDateTime) {
-        Appointment appointment = new Appointment(user, appointmentDateTime, center, AppointmentStatus.SCHEDULED);
+    public void makeAppointment(Donor user, DonationCenter center, LocalDateTime appointmentDateTime, AppointmentStatus status) {
+        Appointment appointment = new Appointment(user, appointmentDateTime, center, status);
 
         if(this.appointmentRepo.checkDisponibility(center.getId(), appointmentDateTime).isPresent())
             throw new RuntimeException("Exista deja o programare la centrul " + center.getName() + " la data si ora selectata!");
@@ -209,5 +209,10 @@ public class ServicesImplementation implements IObservable {
         return donorRepo.findAll().stream()
                 .filter(d -> d.getEligibility() == eligibility)
                 .toList();
+    }
+
+    public Appointment findEligibilityAppointment(Donor donor){
+        return appointmentRepo.findEligibilityAppointment(donor)
+                .orElseThrow(() -> new RuntimeException("Eroare la gasirea programarii"));
     }
 }

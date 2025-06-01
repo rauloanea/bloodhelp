@@ -129,7 +129,7 @@ public class ControllerFactory {
     }
 
     private void runDonorHomePage(){
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/home_page.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/donor_home_page.fxml"));
 
         DonorHomeController controller = new DonorHomeController();
 //        controller.setCurrentUser(this.currentUser);

@@ -82,12 +82,10 @@ public class DonorHomeController extends Controller {
                 title = "Eligibilitate neverificată!";
                 message = "Înainte de a programa o donare, verifică dacă ești eligibil! Poți face asta din \"Gestionează profil\"";
                 break;
-            case 0:
+            default:
                 title = "Momentan nu poți face o programare!";
                 message = "Nu ești eligibil pentru donare!";
                 break;
-            default:
-                return;
         }
 
         ControllerFactory.getInstance().showMessage(

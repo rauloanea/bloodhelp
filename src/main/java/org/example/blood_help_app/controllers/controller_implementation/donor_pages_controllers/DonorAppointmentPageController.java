@@ -10,6 +10,7 @@ import org.example.blood_help_app.controllers.controller_implementation.general.
 import org.example.blood_help_app.controllers.factory.ControllerFactory;
 import org.example.blood_help_app.controllers.factory.ControllerType;
 import org.example.blood_help_app.domain.donationsdata.DonationCenter;
+import org.example.blood_help_app.domain.enums.AppointmentStatus;
 
 import java.sql.Time;
 import java.time.LocalDateTime;
@@ -75,7 +76,8 @@ public class DonorAppointmentPageController extends Controller {
             this.services.makeAppointment(
                     ControllerFactory.getInstance().getLoggedUser().asDonor().get(),
                     center,
-                    appointmentDateTime
+                    appointmentDateTime,
+                    AppointmentStatus.SCHEDULED
             );
 
             ControllerFactory.getInstance().showMessage(Alert.AlertType.CONFIRMATION, null, "Felicitari!",

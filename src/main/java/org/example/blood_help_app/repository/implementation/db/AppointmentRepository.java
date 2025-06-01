@@ -8,6 +8,7 @@ import org.example.blood_help_app.repository.interfaces.IAppointmentRepository;
 import org.example.blood_help_app.repository.interfaces.IDonationCenterRepository;
 import org.example.blood_help_app.repository.interfaces.IDonorRepository;
 
+import javax.swing.text.html.Option;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,6 +28,11 @@ public class AppointmentRepository extends AbstractRepository<Integer, Appointme
         super(props, "appointments");
         this.donorRepository = donorRepository;
         this.centerRepository = centerRepository;
+    }
+
+    @Override
+    public Optional<Appointment> findEligibilityAppointment(Donor user) {
+        return null;
     }
 
     @Override

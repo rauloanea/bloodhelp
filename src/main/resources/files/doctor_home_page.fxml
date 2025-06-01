@@ -18,7 +18,7 @@
             <!-- Imaginea de profil suprapusă (profile_image) -->
             <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 0);">
                 <image>
-                    <Image url="@profile_page.png" />
+                    <Image url="@profile_picture.png" />
                 </image>
             <StackPane.margin>
                <Insets bottom="208.0" />

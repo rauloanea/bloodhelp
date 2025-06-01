@@ -7,6 +7,7 @@ import org.example.blood_help_app.controllers.controller_implementation.general.
 import org.example.blood_help_app.controllers.factory.ControllerFactory;
 import org.example.blood_help_app.controllers.factory.ControllerType;
 import org.example.blood_help_app.domain.donationsdata.Appointment;
+import org.example.blood_help_app.domain.enums.AppointmentStatus;
 import org.example.blood_help_app.utils.password_encryption.PasswordEncryption;
 
 import java.time.LocalDateTime;
@@ -79,8 +80,6 @@ public class DonorProfileController extends Controller {
 
             this.labelEligibility.setText("Vei fi anuntat de catre medic daca esti eligibil sau nu");
             setVisibilityForEligibilityButtons(false);
-
-            //TODO: notify doctors
         });
 
         this.checkEligibility();
@@ -113,7 +112,20 @@ public class DonorProfileController extends Controller {
                 this.labelEligibility.setText("Vei fi anuntat de catre medic daca esti eligibil sau nu");
                 setVisibilityForEligibilityButtons(false);
                 break;
+            case 3:
+                try {
+                    var appointment = services.findEligibilityAppointment(ControllerFactory.getInstance().getLoggedUser().asDonor().get());
 
+                    this.labelEligibility.setText("Ai o programare la " + appointment.getDonationCenter().getName()
+                            + " la ora " + appointment.getDate() + " pentru verificarea eligibilitatii!");
+                    setVisibilityForEligibilityButtons(false);
+                    break;
+
+                }catch (Exception e){
+                    this.labelEligibility.setText("Din pacate nu esti eligibil pentru donare ;(((");
+                    setVisibilityForEligibilityButtons(false);
+                    break;
+                }
         }
     }
 
@@ -206,6 +218,11 @@ public class DonorProfileController extends Controller {
 
                 ControllerFactory.getInstance().showMessage(Alert.AlertType.CONFIRMATION, null, "Succes",
                         "Programarea a fost anulata cu succes!");
+
+                if(appointment.getStatus().equals(AppointmentStatus.ELIGIBILITY_CHECK)){
+                    services.setDonorEligibility(ControllerFactory.getInstance().getLoggedUser().asDonor().get(), -1);
+                    ControllerFactory.getInstance().getLoggedUser().asDonor().get().setEligibility(-1);
+                }
             }catch (Exception e){
                 ControllerFactory.getInstance().showMessage(Alert.AlertType.ERROR, null, "Eroare", e.getMessage());
             }

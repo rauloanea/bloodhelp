@@ -1,6 +1,7 @@
 package org.example.blood_help_app.repository.implementation.hibernate;
 
 import org.example.blood_help_app.domain.donationsdata.Appointment;
+import org.example.blood_help_app.domain.enums.AppointmentStatus;
 import org.example.blood_help_app.domain.users.Donor;
 import org.example.blood_help_app.repository.interfaces.IAppointmentRepository;
 import org.example.blood_help_app.utils.repo_utils.HibernateUtils;
@@ -129,6 +130,26 @@ public class AppointmentMappedRepository implements IAppointmentRepository {
                     .setParameter("donor", donor)
                     .setParameter("now", LocalDateTime.now())
                     .getResultList();
+        }
+    }
+
+    @Override
+    public Optional<Appointment> findEligibilityAppointment(Donor donor) {
+        if (donor == null) {
+            throw new IllegalArgumentException("Donor cannot be null");
+        }
+
+        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+            return session.createQuery(
+                            "FROM Appointment WHERE donor = :donor AND status = :status ORDER BY date DESC",
+                            Appointment.class)
+                    .setParameter("donor", donor)
+                    .setParameter("status", AppointmentStatus.ELIGIBILITY_CHECK)
+                    .setMaxResults(1) // Returnăm doar cea mai recentă programare
+                    .uniqueResultOptional();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Optional.empty();
         }
     }
 }

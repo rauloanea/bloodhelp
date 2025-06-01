@@ -11,4 +11,6 @@ public interface IAppointmentRepository extends IRepository<Integer, Appointment
     Optional<Appointment> checkDisponibility(Integer centerId, LocalDateTime date);
 
     List<Appointment> findFutureAppointmentsChronological(Donor user);
+
+    Optional<Appointment> findEligibilityAppointment(Donor user);
 }
