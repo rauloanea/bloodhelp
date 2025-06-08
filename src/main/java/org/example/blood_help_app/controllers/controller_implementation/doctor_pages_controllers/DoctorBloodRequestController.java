@@ -87,7 +87,6 @@ public class DoctorBloodRequestController extends Controller {
 
             @Override
             public DonationCenter fromString(String string) {
-                // Nu este necesar pentru un ComboBox care nu este editabil
                 return null;
             }
         });
@@ -136,8 +135,7 @@ public class DoctorBloodRequestController extends Controller {
             BloodTypeEnum bloodType = BloodTypeEnum.valueOf(selectedBloodType);
             String notes = notesField.getText();
 
-            // TODO: Implementeaza logica pentru crearea cererii in baza de date
-             services.createBloodRequest(bloodType, currentQuantity,
+            services.createBloodRequest(bloodType, currentQuantity,
                      ControllerFactory.getInstance().getLoggedUser().asDoctor().get(),
                      selectedCenter, notes);
 

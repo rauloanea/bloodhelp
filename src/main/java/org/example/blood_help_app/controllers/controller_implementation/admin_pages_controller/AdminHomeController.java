@@ -152,6 +152,6 @@ public class AdminHomeController extends Controller {
 
     private void showSuccessAlert(String message) {
         // Implement your alert/show notification method here
-        ControllerFactory.getInstance().showMessage(Alert.AlertType.NONE, null, null, message);
+        ControllerFactory.getInstance().showMessage(Alert.AlertType.CONFIRMATION, null, "Operatie realizata cu succes!", message);
     }
 }

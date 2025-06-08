@@ -241,6 +241,8 @@ public class DoctorAppointmentRequestController extends Controller implements IO
                     AppointmentStatus.ELIGIBILITY_CHECK
             );
 
+            ControllerFactory.getInstance().getLoggedUser().asDonor().get().setEligibility(3);
+
             ControllerFactory.getInstance().showMessage(
                     Alert.AlertType.INFORMATION,
                     "Programare creată",
